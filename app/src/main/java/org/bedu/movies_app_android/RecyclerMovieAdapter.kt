@@ -3,6 +3,7 @@ package org.bedu.movies_app_android
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -25,19 +26,34 @@ class RecyclerMovieAdapter(private val movies : List<Movie>) : RecyclerView.Adap
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        private val title = view.findViewById<TextView>(R.id.title)
-        private val category = view.findViewById<TextView>(R.id.category)
-        private val language = view.findViewById<TextView>(R.id.language)
-        private val duration = view.findViewById<TextView>(R.id.duration)
-        private val rate = view.findViewById<RatingBar>(R.id.ratingBar)
+        private val titleVT = view.findViewById<TextView>(R.id.movie_title)
+        private val actorsVT = view.findViewById<TextView>(R.id.movie_actors)
+        private val directorVT = view.findViewById<TextView>(R.id.movie_director)
+        // private val category = view.findViewById<TextView>(R.id.movie)
+        private val languageVT = view.findViewById<TextView>(R.id.movie_language)
+        private val durationVT = view.findViewById<TextView>(R.id.movie_duration)
+        // private val rate = view.findViewById<RatingBar>(R.id.movie_rating)
+        private val ratingVT = view.findViewById<TextView>(R.id.movie_rating)
+        private val dateVT = view.findViewById<TextView>(R.id.movie_date)
+        private val resumeTV = view.findViewById<TextView>(R.id.movie_resume)
+        private val imageIV = view.findViewById<ImageView>(R.id.movie_poster)
 
 
         fun bind(movie: Movie) {
-            title.text = movie.name
-            category.text = movie.category.toString()
-            language.text = movie.language.toString()
-            duration.text = movie.duration.toString()
-            rate.rating = movie.rating.toFloat()
+            titleVT.text = movie.name
+            actorsVT.text = movie.actors.joinToString(limit = 3, truncated = "....") { it ->
+                it.replaceFirstChar{it -> it.uppercase()}
+            }
+            directorVT.text = movie.directors.joinToString(limit = 1, truncated = "....") {
+                it.replaceFirstChar{it -> it.uppercase()}
+            }
+            // category.text = movie.category.toString()
+            languageVT.text = movie.language.toString()
+            durationVT.text = "${movie.duration.toString()} min"
+            ratingVT.text = movie.rating.toString()
+            resumeTV.text = movie.resume.take(60) + "..."
+            dateVT.text = movie.date
+            imageIV.setImageResource(movie.image)
         }
     }
 }

@@ -12,12 +12,14 @@ data class Movie(
     val id: Int,
     val name: String,
     val actors: List<String>,
-    val duration: Double,
     val directors: List<String>,
+    val duration: Double,
     val date: String,
     val rating: Double,
     val language: Language,
-    val category: Category
+    val category: Category,
+    val resume: String,
+    val image: Int,
 )
 
 
