@@ -1,18 +1,29 @@
-package org.bedu.movies_app_android
+package org.bedu.movies_app_android.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import org.bedu.movies_app_android.R
+import org.bedu.movies_app_android.databinding.ActivityMainBinding
+import org.bedu.movies_app_android.fragments.FragmentCinemaListings
+import org.bedu.movies_app_android.fragments.FragmentFavorites
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var recycler: RecyclerView
+    private lateinit var binding: ActivityMainBinding
+
+    val cinemaFragment = FragmentCinemaListings()
+    val favortitesFragment = FragmentFavorites()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recycler = findViewById(R.id.recycler)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recycler.adapter =  RecyclerMovieAdapter(listOf(
+        setCurrentFragment(cinemaFragment)
+        createFragments()
+        /*recycler.adapter =  RecyclerMovieAdapter(listOf(
             Movie(
                 1,
                 "John Wick 4",
@@ -104,7 +115,49 @@ class MainActivity : AppCompatActivity() {
                 "Una familia inglesa disfruta de unas vacaciones de lujo en Acapulco. El placer se ve interrumpido por la muerte de la abuela, deben volver a Londres en el primer vuelo. Neil (interpretado por Tim Roth) decide escapar de la familia y perder el vuelo, quedándose en Acapulco de manera indefinida. ¿Lo hace para quedarse con la herencia? ¿Qué secretos esconde?",
                 R.drawable.super_mario_poster
             ),
-        ))
+        ))*/
 
+    }
+
+
+    private fun createFragments(){
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.nav_cinema_listings ->{
+                    setCurrentFragment(cinemaFragment)
+                    it.actionView?.clearFocus()
+                    true
+                }
+                R.id.nav_favorite_movies ->{
+                    setCurrentFragment(favortitesFragment)
+                    it.actionView?.clearFocus()
+                    true
+                }
+
+               /* R.id.nav_history->{
+                    val args = Bundle()
+                    val shared: SharedPreferences = getSharedPreferences("shared", MODE_PRIVATE)
+                    args.putInt("idConductor", shared.getInt("idConductor",10))
+                    args.putString("token", shared.getString("token","0"))
+                    tercerFragment.arguments=args
+                    // setCurrentFragment(tercerFragment)
+                    // true
+                    setCurrentFragment(tercerFragment)
+                    it.actionView?.clearFocus()
+                    true
+                }*/
+                else -> false
+            }
+        }
+//        bottomNavigationView.getOrCreateBadge(R.id.nav_home).apply {
+//            isVisible=true
+//            number=8
+//        }
+    }
+    private fun setCurrentFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.containerView,fragment)
+            commit()
+        }
     }
 }

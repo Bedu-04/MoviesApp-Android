@@ -1,22 +1,23 @@
-package org.bedu.movies_app_android
+package org.bedu.movies_app_android.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.R
 
 
 class RecyclerMovieAdapter(private val movies : List<Movie>) : RecyclerView.Adapter<RecyclerMovieAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerMovieAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
     }
