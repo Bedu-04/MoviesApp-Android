@@ -2,17 +2,26 @@ package org.bedu.movies_app_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+
 class MainActivity : AppCompatActivity() {
+
     private lateinit var recycler: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recycler = findViewById(R.id.recycler)
+       recycler = findViewById<RecyclerView>(R.id.recycler)
 
-        recycler.adapter =  RecyclerMovieAdapter(listOf(
+
+        val LayoutManager = GridLayoutManager(this,3)
+
+            recycler.layoutManager = LayoutManager
+
+        recycler.adapter =  RecyclerMovieCatalogAdapter(listOf(
             Movie(
                 1,
                 "John Wick 4",
@@ -24,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 Language.Francés,
                 Category.Suspenso,
                 "John Wick (Keanu Reeves) descubre un camino para derrotar a La Mesa. Pero antes de poder ganar su libertad, Wick deberá enfrentarse a un nuevo enemigo con poderosas alianzas en todo el mundo; y contra las fuerzas que convierten a viejos amigos en enemigos.",
-                R.drawable.scream_6_poster
+                R.drawable.john_wick4
             ),
             Movie(
                 2,
@@ -96,13 +105,26 @@ class MainActivity : AppCompatActivity() {
                 "Sundown: Secretos en Acapulco",
                 listOf("Charlotte Gainsbourg", "Henry Goodman", "Iazua Larios", "Tim Roth"),
                 listOf("Michel Franco"),
-                92.0,
+                110.0,
                 "9-03-2023",
-                9.7,
+                8.7,
                 Language.Francés,
                 Category.Drama,
                 "Una familia inglesa disfruta de unas vacaciones de lujo en Acapulco. El placer se ve interrumpido por la muerte de la abuela, deben volver a Londres en el primer vuelo. Neil (interpretado por Tim Roth) decide escapar de la familia y perder el vuelo, quedándose en Acapulco de manera indefinida. ¿Lo hace para quedarse con la herencia? ¿Qué secretos esconde?",
-                R.drawable.super_mario_poster
+                R.drawable.sundown_poster
+            ),
+            Movie(
+                9,
+                "Scream 6",
+                listOf("Courteney Cox, Melissa Barrera, Jenna Ortega, Hayden Panettiere"),
+                listOf("Tyler Gillett, Matt Bettinelli-Olpin"),
+                125.0,
+                "9-03-2023",
+                9.1,
+                Language.Inglés,
+                Category.Comedia,
+                "Sam, Tara, Chad y Mindy, los cuatro supervivientes de la matanza de Woodsboro, abandonan el pueblo para empezar de cero en Nueva York. Sin embargo, Ghostface los persigue hasta la gran ciudad para terminar con todos ellos",
+                R.drawable.scream_6_poster
             ),
         ))
 

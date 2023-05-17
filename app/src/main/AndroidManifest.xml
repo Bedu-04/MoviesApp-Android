@@ -12,7 +12,7 @@
         android:theme="@style/Theme.MoviesAppAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".MoviesActity"
+            android:name=".MoviesActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
