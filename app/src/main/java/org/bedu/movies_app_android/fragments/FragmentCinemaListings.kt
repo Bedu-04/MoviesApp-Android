@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.R
+import org.bedu.movies_app_android.RecyclerMovieCatalogAdapter
 import org.bedu.movies_app_android.adapters.RecyclerMovieAdapter
 import org.bedu.movies_app_android.models.Category
 import org.bedu.movies_app_android.models.Language
@@ -41,9 +43,9 @@ class FragmentCinemaListings : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerCinemaListing)
 
-        recycler.adapter = RecyclerMovieAdapter(getProducts())
+        recycler.adapter = RecyclerMovieCatalogAdapter(getProducts())
 
-        recycler.layoutManager = LinearLayoutManager(activity)
+        recycler.layoutManager = GridLayoutManager(activity, 3)
 
         return view
     }
