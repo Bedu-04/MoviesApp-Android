@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android
+package org.bedu.movies_app_android.models
 
 enum class Category {
     Comedia, Drama, Suspenso, Terror, Acción, CienciaFicción, Fantasía, Animación

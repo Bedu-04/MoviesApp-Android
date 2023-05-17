@@ -7,6 +7,10 @@ android {
     namespace 'org.bedu.movies_app_android'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "org.bedu.movies_app_android"
         minSdk 28
