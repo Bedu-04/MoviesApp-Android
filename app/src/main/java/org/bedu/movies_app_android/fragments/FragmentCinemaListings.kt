@@ -72,7 +72,6 @@ class FragmentCinemaListings : Fragment() {
 
         recycler.layoutManager = GridLayoutManager(activity, 3)
 
-
         return view
     }
 
@@ -81,6 +80,10 @@ class FragmentCinemaListings : Fragment() {
         return StoreSingleton.getInstance().getData()
     }
 
+
+
+
+    }
 
 
 
