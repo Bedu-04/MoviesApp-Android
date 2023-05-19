@@ -132,4 +132,13 @@ class StoreSingleton private constructor() {
 
         return movies
     }
+
+    fun addFavoriteMovie(movie: Movie) {
+        favorites.add(movie)
+    }
+
+    fun deleteFavoriteMovie(movie: Movie) {
+        favorites = favorites.filter { it -> it.id == movie.id } as MutableList<Movie>
+    }
+
 }

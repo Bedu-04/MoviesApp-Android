@@ -1,9 +1,11 @@
 package org.bedu.movies_app_android
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +13,10 @@ import org.bedu.movies_app_android.models.Movie
 
 
 class RecyclerMovieCatalogAdapter(
+
     private val movies : Array<Movie>,
-    private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerMovieCatalogAdapter.ViewHolder>(){
+    private val goToDetailFragment: (Movie) -> Unit,
+    private val toggleFavorites: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerMovieCatalogAdapter.ViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieCatalogAdapter.ViewHolder {
@@ -23,7 +27,12 @@ class RecyclerMovieCatalogAdapter(
     override fun onBindViewHolder(holder: RecyclerMovieCatalogAdapter.ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
-        holder.itemView.setOnClickListener{clickListener(movie)}
+
+        holder.favoritesVT.setOnCheckedChangeListener { CheckBox, isChecked ->
+           toggleFavorites(movie)
+        }
+
+        holder.itemView.setOnClickListener{goToDetailFragment(movie)}
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +44,7 @@ class RecyclerMovieCatalogAdapter(
         private val durationVT = view.findViewById<TextView>(R.id.duration_catalog)
         private val ratingVT = view.findViewById<TextView>(R.id.rating_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
-
+        val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
 
         fun bind(movie: Movie) {
             durationVT.text = "${movie.duration.toString()} min"

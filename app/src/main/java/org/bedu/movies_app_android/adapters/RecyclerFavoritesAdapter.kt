@@ -1,12 +1,15 @@
 package org.bedu.movies_app_android.adapters
 
+import android.util.Log
 import org.bedu.movies_app_android.R
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
 
@@ -32,12 +35,14 @@ class RecyclerFavoritesAdapter(
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
+        val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
         private val durationVT = view.findViewById<TextView>(R.id.duration_catalog)
         private val ratingVT = view.findViewById<TextView>(R.id.rating_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
 
-
         fun bind(movie: Movie) {
+
+            favoritesVT.isChecked = true
             durationVT.text = "${movie.duration.toString()} min"
             ratingVT.text = movie.rating.toString()
             imageIV.setImageResource(movie.image)

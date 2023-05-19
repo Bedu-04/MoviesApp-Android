@@ -29,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
 class FragmentCinemaListings : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var recycler: RecyclerView
+    private var store = StoreSingleton.getInstance()
     // private var listener : (Product) ->Unit = {}
     // private var listener : (Movie) ->Unit = {}
     private var favorites = StoreSingleton.getInstance().getFavorites()
@@ -48,7 +49,6 @@ class FragmentCinemaListings : Fragment() {
         recycler = view.findViewById(R.id.recyclerCinemaListing)
 
         recycler.adapter = RecyclerMovieCatalogAdapter(getProducts(), fun (movie:Movie) {
-            favorites.add(movie)
             // Log.d("favorites", favorites.size.toString())
 
             // pasar al siguiente fragment la pelicula que se le dio click
@@ -59,7 +59,16 @@ class FragmentCinemaListings : Fragment() {
             nextFragment.arguments = args
             parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
 
-        })
+        }, fun (movie:Movie) {
+            var hasMovie = store.getFavorites().find { it -> it.id == movie.id }
+            if (hasMovie !== null) {
+                store.deleteFavoriteMovie(movie)
+            }else {
+                store.addFavoriteMovie(movie)
+            }
+
+        }
+        )
 
         recycler.layoutManager = GridLayoutManager(activity, 3)
 
