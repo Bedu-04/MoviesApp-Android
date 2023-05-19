@@ -221,15 +221,23 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
-    <TextView
+    <RatingBar
         android:id="@+id/movie_rating"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Rating"
+        style="@android:style/Widget.Material.RatingBar.Small"
+        android:layout_width="81dp"
+        android:layout_height="20dp"
+        android:max="5"
+        android:min="1"
+        android:numStars="5"
+        android:stepSize="1"
+        android:text="RATING"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+        app:layout_constraintTop_toTopOf="@+id/guideline7"
+        app:layout_constraintVertical_bias="0.65" />
+
 
     <TextView
         android:id="@+id/movie_duration"
