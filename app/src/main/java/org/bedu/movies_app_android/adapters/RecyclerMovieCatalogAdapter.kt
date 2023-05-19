@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
@@ -26,15 +27,15 @@ class RecyclerMovieCatalogAdapter(private val movies : List<Movie>) : RecyclerVi
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-
-        private val durationVT = view.findViewById<TextView>(R.id.duration_catalog)
-        private val ratingVT = view.findViewById<TextView>(R.id.rating_catalog)
+        private val titlecatVT = view.findViewById<TextView>(R.id.title_catalog)
+        private val ratingBarVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
 
 
+
         fun bind(movie: Movie) {
-            durationVT.text = "${movie.duration.toString()} min"
-            ratingVT.text = movie.rating.toString()
+            titlecatVT.text = movie.name.toString()
+            ratingBarVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
         }
     }
