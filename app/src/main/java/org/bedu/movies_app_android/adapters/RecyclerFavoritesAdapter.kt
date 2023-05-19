@@ -1,6 +1,7 @@
-package org.bedu.movies_app_android
+package org.bedu.movies_app_android.adapters
 
-import android.content.Context
+import org.bedu.movies_app_android.R
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,20 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
 
 
-class RecyclerMovieCatalogAdapter(
-    private val movies : Array<Movie>,
-    private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerMovieCatalogAdapter.ViewHolder>(){
+class RecyclerFavoritesAdapter(
+    private val movies : MutableList<Movie>) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieCatalogAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerFavoritesAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_catalog, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerMovieCatalogAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerFavoritesAdapter.ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
-        holder.itemView.setOnClickListener{clickListener(movie)}
+        // holder.itemView.setOnClickListener{clickListener(movie)}
     }
 
     override fun getItemCount(): Int {
