@@ -153,7 +153,8 @@ class StoreSingleton private constructor() {
         ),
 
 
-        return movies)
+        )
+        return movies
     }
 
     fun addFavoriteMovie(movie: Movie) {

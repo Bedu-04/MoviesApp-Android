@@ -38,14 +38,12 @@ class RecyclerFavoritesAdapter(
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
-        private val durationVT = view.findViewById<TextView>(R.id.movie_duration)
-        private val ratingVT = view.findViewById<RatingBar>(R.id.movie_rating)
+        private val ratingVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
 
         fun bind(movie: Movie) {
 
             favoritesVT.isChecked = true
-            durationVT.text = "${movie.duration.toString()} min"
             ratingVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
         }
