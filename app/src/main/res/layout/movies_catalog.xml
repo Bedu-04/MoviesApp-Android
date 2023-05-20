@@ -78,6 +78,7 @@
 
     <RatingBar
         android:id="@+id/ratingBar_catalog"
+        android:clickable="false"
         style="@android:style/Widget.Material.RatingBar.Small"
         android:layout_width="81dp"
         android:layout_height="20dp"

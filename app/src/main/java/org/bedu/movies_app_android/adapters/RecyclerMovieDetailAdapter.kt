@@ -3,6 +3,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
@@ -26,34 +27,33 @@ class RecyclerMovieDetailAdapter(private val movies : List<Movie>) : RecyclerVie
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        private val titleVT = view.findViewById<TextView>(R.id.movie_title)
-        private val actorsVT = view.findViewById<TextView>(R.id.movie_actors)
-        private val directorVT = view.findViewById<TextView>(R.id.movie_director)
+        private val titleDetail = view.findViewById<TextView>(R.id.movie_title)
+        private val actorsDetail = view.findViewById<TextView>(R.id.movie_actors)
+        private val directorDetail = view.findViewById<TextView>(R.id.movie_director)
         // private val category = view.findViewById<TextView>(R.id.movie)
-        private val languageVT = view.findViewById<TextView>(R.id.movie_language)
-        private val durationVT = view.findViewById<TextView>(R.id.movie_duration)
-        // private val rate = view.findViewById<RatingBar>(R.id.movie_rating)
-        private val ratingVT = view.findViewById<TextView>(R.id.movie_rating)
-        private val dateVT = view.findViewById<TextView>(R.id.movie_date)
-        private val resumeTV = view.findViewById<TextView>(R.id.movie_resume)
-        private val imageIV = view.findViewById<ImageView>(R.id.movie_poster)
+        private val languageDetail = view.findViewById<TextView>(R.id.movie_language)
+        private val durationDetail = view.findViewById<TextView>(R.id.movie_duration)
+        private val ratingDetail = view.findViewById<RatingBar>(R.id.movie_rating)
+
+        private val dateDetail = view.findViewById<TextView>(R.id.movie_date)
+        private val resumeDetail = view.findViewById<TextView>(R.id.movie_resume)
+        private val imageDetail = view.findViewById<ImageView>(R.id.movie_poster)
 
 
         fun bind(movie: Movie) {
-            titleVT.text = movie.name
-            actorsVT.text = movie.actors.joinToString(limit = 3, truncated = "....") { it ->
+            titleDetail.text = movie.name
+            actorsDetail.text = movie.actors.joinToString(limit = 3, truncated = "....") { it ->
                 it.replaceFirstChar{it -> it.uppercase()}
             }
-            directorVT.text = movie.directors.joinToString(limit = 1, truncated = "....") {
+            directorDetail.text = movie.directors.joinToString(limit = 1, truncated = "....") {
                 it.replaceFirstChar{it -> it.uppercase()}
             }
-            // category.text = movie.category.toString()
-            languageVT.text = movie.language.toString()
-            durationVT.text = "${movie.duration.toString()} min"
-            ratingVT.text = movie.rating.toString()
-            resumeTV.text = movie.resume.take(60) + "..."
-            dateVT.text = movie.date
-            imageIV.setImageResource(movie.image)
+            languageDetail.text = movie.language.toString()
+            durationDetail.text = "${movie.duration.toString()} min"
+            ratingDetail.rating = movie.rating.toFloat()
+            resumeDetail.text = movie.resume.take(60) + "..."
+            dateDetail.text = movie.date
+            imageDetail.setImageResource(movie.image)
         }
     }
 }
