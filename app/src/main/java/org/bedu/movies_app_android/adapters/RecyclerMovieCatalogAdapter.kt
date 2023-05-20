@@ -42,14 +42,14 @@ class RecyclerMovieCatalogAdapter(
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         private val titlecatVT = view.findViewById<TextView>(R.id.title_catalog)
-        private val ratingBarVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
+        // private val ratingBarVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
         val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
 
 
         fun bind(movie: Movie) {
             titlecatVT.text = movie.name.toString()
-            ratingBarVT.rating = movie.rating.toFloat()
+            // ratingBarVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
         }
     }

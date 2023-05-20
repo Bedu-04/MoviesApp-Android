@@ -1,6 +1,7 @@
 package org.bedu.movies_app_android.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +42,9 @@ class FragmentFavorites : Fragment() {
         recycler = view.findViewById(R.id.recyclerFavorites)
 
         val favoritesMovies = StoreSingleton.getInstance().getFavorites()
-
+        Log.d("favorites", favoritesMovies.size.toString())
         recycler.adapter = RecyclerFavoritesAdapter(favoritesMovies)
-            return view
+        return view
     }
 
     companion object {

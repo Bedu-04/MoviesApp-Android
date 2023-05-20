@@ -1,5 +1,6 @@
 package org.bedu.movies_app_android.store
 
+import android.util.Log
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.models.Category
 import org.bedu.movies_app_android.models.Language
@@ -134,6 +135,7 @@ class StoreSingleton private constructor() {
     }
 
     fun addFavoriteMovie(movie: Movie) {
+        Log.d("movie", movie.name.toString())
         favorites.add(movie)
     }
 

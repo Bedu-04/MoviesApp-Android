@@ -60,10 +60,14 @@ class FragmentCinemaListings : Fragment() {
             parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
 
         }, fun (movie:Movie) {
+            Log.d("movie", movie.name)
             var hasMovie = store.getFavorites().find { it -> it.id == movie.id }
+
             if (hasMovie !== null) {
+                Log.d("movie", "tengo la peli")
                 store.deleteFavoriteMovie(movie)
             }else {
+                Log.d("movie", "no la tengo")
                 store.addFavoriteMovie(movie)
             }
 
@@ -83,7 +87,7 @@ class FragmentCinemaListings : Fragment() {
 
 
 
-    }
+
 
 
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -34,17 +35,17 @@ class RecyclerFavoritesAdapter(
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-
+        private val titlecatVT = view.findViewById<TextView>(R.id.title_catalog)
         val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
-        private val durationVT = view.findViewById<TextView>(R.id.duration_catalog)
-        private val ratingVT = view.findViewById<TextView>(R.id.rating_catalog)
+        // private val durationVT = view.findViewById<TextView>(R.id.movie_duration)
+        private val ratingVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
 
         fun bind(movie: Movie) {
-
+            // durationVT.text = "s"
+            titlecatVT.text = movie.name
+            ratingVT.rating = movie.rating.toFloat()
             favoritesVT.isChecked = true
-            durationVT.text = "${movie.duration.toString()} min"
-            ratingVT.text = movie.rating.toString()
             imageIV.setImageResource(movie.image)
         }
     }
