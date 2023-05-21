@@ -11,6 +11,7 @@ enum class Language {
     Español, Inglés, Francés, Coreano
 }
 
+
 data class Movie (
     val id: Int,
     val name: String,
@@ -23,6 +24,8 @@ data class Movie (
     val category: Category,
     val resume: String,
     val image: Int,
+
+
 ): Parcelable  {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

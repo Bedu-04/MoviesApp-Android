@@ -1,4 +1,5 @@
 package org.bedu.movies_app_android.adapters
+import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ class RecyclerMovieDetailAdapter(private val movies : List<Movie>) : RecyclerVie
             resumeDetail.text = movie.resume.take(60) + "..."
             dateDetail.text = movie.date
             imageDetail.setImageResource(movie.image)
+
         }
     }
 }
