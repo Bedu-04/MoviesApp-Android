@@ -1,15 +1,16 @@
 package org.bedu.movies_app_android.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.R
-import org.bedu.movies_app_android.RecyclerMovieCatalogAdapter
+
 import org.bedu.movies_app_android.adapters.RecyclerFavoritesAdapter
 import org.bedu.movies_app_android.models.Movie
 import org.bedu.movies_app_android.store.StoreSingleton
@@ -24,9 +25,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 class FragmentFavorites : Fragment() {
     private lateinit var recycler: RecyclerView
-    private lateinit var adapter: RecyclerFavoritesAdapter
     private var store = StoreSingleton.getInstance()
-    val favoritesMovies = StoreSingleton.getInstance().getFavorites()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,22 +39,22 @@ class FragmentFavorites : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragmen
+        // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
         recycler = view.findViewById(R.id.recyclerFavorites)
-        val favorites = store.getFavorites()
-        adapter = RecyclerFavoritesAdapter(favorites, goToDetailFragment,toggleMovie)
 
-        recycler.adapter = adapter
+        val favoritesMovies = store.getFavorites()
+
+        val textFavorites = view.findViewById<TextView>(R.id.text_wo_favorites)
+        if(favoritesMovies.size > 0){textFavorites.text = "Estas son tus películas en favoritos"} else {textFavorites.text = "No cuentas con películas en estos momentos"}
+
+        recycler.adapter = RecyclerFavoritesAdapter(favoritesMovies, goToDetailFragment,toggleMovie)
+
+        recycler.layoutManager = GridLayoutManager(activity, 3)
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
 
