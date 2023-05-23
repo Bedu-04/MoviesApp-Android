@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.RatingBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
 
@@ -27,9 +28,9 @@ class RecyclerFavoritesAdapter(
         val movie = movies[position]
         holder.bind(movie)
 
-        holder.favoritesVT.isChecked = true
+        holder.favorites_btn.isChecked = true
 
-        holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
+        holder.favorites_btn.setOnCheckedChangeListener { _, _ ->
             toggleFavorites(movie)
         }
         holder.itemView.setOnClickListener{goToDetailFragment(movie)}
@@ -41,16 +42,17 @@ class RecyclerFavoritesAdapter(
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
-        private val ratingVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
-        private val imageIV = view.findViewById<ImageView>(R.id.img)
+        val favorites_btn = view.findViewById<CheckBox>(R.id.cbHeart)
+        private val rating_bar = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
+        private val image_background = view.findViewById<ImageView>(R.id.img)
+        private val title = view.findViewById<TextView>(R.id.title_catalog)
 
 
         fun bind(movie: Movie) {
-
-            favoritesVT.isChecked = movie.isFavorite
-            ratingVT.rating = movie.rating.toFloat()
-            imageIV.setImageResource(movie.image)
+            title.text = movie.name
+            favorites_btn.isChecked = movie.isFavorite
+            rating_bar.rating = movie.rating.toFloat()
+            image_background.setImageResource(movie.image)
         }
     }
 }
