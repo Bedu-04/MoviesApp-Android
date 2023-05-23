@@ -43,7 +43,7 @@ class RecyclerMovieDetailAdapter(private val movies : List<Movie>) : RecyclerVie
 
         fun bind(movie: Movie) {
             titleDetail.text = movie.name
-            actorsDetail.text = movie.actors.joinToString(limit = 3, truncated = "....") { it ->
+            actorsDetail.text = movie.actors.joinToString(", ") { it ->
                 it.replaceFirstChar{it -> it.uppercase()}
             }
             directorDetail.text = movie.directors.joinToString(limit = 1, truncated = "....") {
@@ -52,7 +52,7 @@ class RecyclerMovieDetailAdapter(private val movies : List<Movie>) : RecyclerVie
             languageDetail.text = movie.language.toString()
             durationDetail.text = "${movie.duration.toString()} min"
             ratingDetail.rating = movie.rating.toFloat()
-            resumeDetail.text = movie.resume.take(60) + "..."
+            resumeDetail.text = movie.resume
             dateDetail.text = movie.date
             imageDetail.setImageResource(movie.image)
 

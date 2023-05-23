@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.R
@@ -34,7 +35,6 @@ class FragmentFavorites : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragmen
 
         val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
@@ -42,8 +42,12 @@ class FragmentFavorites : Fragment() {
 
         val favoritesMovies = StoreSingleton.getInstance().getFavorites()
 
+        val textFavorites = view.findViewById<TextView>(R.id.text_wo_favorites)
+        if(favoritesMovies.size > 0){textFavorites.text = "Estas son tus películas en favoritos"} else {textFavorites.text = "No cuentas con películas en estos momentos"}
+
         recycler.adapter = RecyclerFavoritesAdapter(favoritesMovies)
-            return view
+
+        return view
     }
 
     companion object {

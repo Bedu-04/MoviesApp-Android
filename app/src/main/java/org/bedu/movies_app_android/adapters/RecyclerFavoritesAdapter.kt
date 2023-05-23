@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
 
@@ -41,8 +42,9 @@ class RecyclerFavoritesAdapter(
         private val ratingVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
 
-        fun bind(movie: Movie) {
 
+
+        fun bind(movie: Movie) {
             favoritesVT.isChecked = true
             ratingVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
