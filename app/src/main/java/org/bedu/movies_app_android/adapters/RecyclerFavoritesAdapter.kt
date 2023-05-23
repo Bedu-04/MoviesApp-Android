@@ -1,58 +1,56 @@
-package org.bedu.movies_app_android
+package org.bedu.movies_app_android.adapters
 
-import android.content.Context
-import android.util.Log
+
+import org.bedu.movies_app_android.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.RatingBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.models.Movie
 
 
-class RecyclerMovieCatalogAdapter(
-
-    private val movies : MutableList<Movie>,
+class RecyclerFavoritesAdapter(
+    private val movies: MutableList<Movie>,
     private val goToDetailFragment: (Movie) -> Unit,
-    private val toggleFavorites: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerMovieCatalogAdapter.ViewHolder>(){
+    private val toggleFavorites: (Movie) -> Unit
+) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieCatalogAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerFavoritesAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_catalog, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerMovieCatalogAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerFavoritesAdapter.ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
-        Log.d("lista", movie.isFavorite.toString())
+
+        holder.favoritesVT.isChecked = true
 
         holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
-           toggleFavorites(movie)
+            toggleFavorites(movie)
         }
-
         holder.itemView.setOnClickListener{goToDetailFragment(movie)}
     }
+
 
     override fun getItemCount(): Int {
         return movies.size
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-
-        private val titleVT = view.findViewById<TextView>(R.id.title_catalog)
-        private val ratingBarVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
-        private val imageIV = view.findViewById<ImageView>(R.id.img)
         val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
+        private val ratingVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
+        private val imageIV = view.findViewById<ImageView>(R.id.img)
+
 
         fun bind(movie: Movie) {
-            titleVT.text = movie.name.toString()
-            ratingBarVT.rating = movie.rating.toFloat()
-            imageIV.setImageResource(movie.image)
+
             favoritesVT.isChecked = movie.isFavorite
+            ratingVT.rating = movie.rating.toFloat()
+            imageIV.setImageResource(movie.image)
         }
     }
 }
