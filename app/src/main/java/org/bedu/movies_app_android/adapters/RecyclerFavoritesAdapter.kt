@@ -1,6 +1,7 @@
 package org.bedu.movies_app_android.adapters
 
 import android.media.Rating
+import android.os.Handler
 import android.util.Log
 import org.bedu.movies_app_android.R
 
@@ -13,12 +14,17 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
 import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.store.StoreSingleton
+import kotlin.concurrent.timer
 
 
 class RecyclerFavoritesAdapter(
-    private val movies : MutableList<Movie>) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
-
+    private val movies: MutableList<Movie>,
+    private val goToDetailFragment: (Movie) -> Unit,
+    private val toggleFavorites: (Movie) -> Unit
+) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerFavoritesAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_catalog, parent, false)
@@ -28,7 +34,28 @@ class RecyclerFavoritesAdapter(
     override fun onBindViewHolder(holder: RecyclerFavoritesAdapter.ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
-        // holder.itemView.setOnClickListener{clickListener(movie)}
+
+        holder.favoritesVT.isChecked = true
+
+        holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
+            toggleFavorites(movie)
+        }
+        holder.itemView.setOnClickListener{goToDetailFragment(movie)}
+    }
+
+    private var updatedMovies: MutableList<Movie>? = null
+    fun updateMoviesDeferred(newMovies: MutableList<Movie>) {
+        newMovies.forEach { it -> Log.d("PELICULA EN FAVORITOS", it.name) }
+        updatedMovies = newMovies
+        Handler().postDelayed({
+            if (updatedMovies != null) {
+                movies.clear()
+                movies.addAll(updatedMovies!!)
+                notifyDataSetChanged()
+                updatedMovies = null
+            }
+        }, 1000)
+
     }
 
     override fun getItemCount(): Int {
@@ -41,9 +68,10 @@ class RecyclerFavoritesAdapter(
         private val ratingVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
 
+
         fun bind(movie: Movie) {
 
-            favoritesVT.isChecked = true
+            favoritesVT.isChecked = movie.isFavorite
             ratingVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
         }

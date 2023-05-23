@@ -23,6 +23,8 @@ data class Movie (
     val category: Category,
     val resume: String,
     val image: Int,
+    var isFavorite: Boolean,
+
 ): Parcelable  {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -35,7 +37,8 @@ data class Movie (
         Language.values()[parcel.readInt()],
         Category.values()[parcel.readInt()],
         parcel.readString() ?: "",
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

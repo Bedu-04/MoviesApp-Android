@@ -35,6 +35,7 @@ class FragmentCinemaListings : Fragment() {
     private var favorites = StoreSingleton.getInstance().getFavorites()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -60,11 +61,11 @@ class FragmentCinemaListings : Fragment() {
             parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
 
         }, fun (movie:Movie) {
-            var hasMovie = store.getFavorites().find { it -> it.id == movie.id }
+            var hasMovie = store.getData().find { it -> (it.id == movie.id && it.isFavorite) }
             if (hasMovie !== null) {
-                store.deleteFavoriteMovie(movie)
+                store.deleteFavoriteMovie(movie.id)
             }else {
-                store.addFavoriteMovie(movie)
+                store.addFavoriteMovie(movie.id)
             }
 
         }
@@ -77,7 +78,7 @@ class FragmentCinemaListings : Fragment() {
     }
 
     //generamos datos dummy con este método
-    private fun getProducts(): Array<Movie>{
+    private fun getProducts(): MutableList<Movie>{
         return StoreSingleton.getInstance().getData()
     }
 

@@ -40,19 +40,19 @@ class FragmentDetail : Fragment() {
 
         val args = arguments
         if (args != null) {
-            val miArreglo = args.getParcelableArray("arreglo")
-            if (miArreglo != null) {
+            val myArray = args.getParcelableArray("arreglo")
+            if (myArray != null) {
                 // Utilizar el arreglo como desees
-                val movies = miArreglo.filterIsInstance<Movie>()
+                val movies = myArray.filterIsInstance<Movie>()
                 recycler.adapter =  RecyclerMovieDetailAdapter(movies)
-                for (movie in movies) {
-                    Log.d("DestinoFragment", "Película: ${movie.name}, Género: ${movie.language}")
-                }
             }
         }
 
         return view
     }
+
+
+
 
     companion object {
         /**

@@ -15,7 +15,7 @@ import org.bedu.movies_app_android.models.Movie
 
 class RecyclerMovieCatalogAdapter(
 
-    private val movies : Array<Movie>,
+    private val movies : MutableList<Movie>,
     private val goToDetailFragment: (Movie) -> Unit,
     private val toggleFavorites: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerMovieCatalogAdapter.ViewHolder>(){
 
@@ -28,8 +28,9 @@ class RecyclerMovieCatalogAdapter(
     override fun onBindViewHolder(holder: RecyclerMovieCatalogAdapter.ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
+        Log.d("lista", movie.isFavorite.toString())
 
-        holder.favoritesVT.setOnCheckedChangeListener { CheckBox, isChecked ->
+        holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
            toggleFavorites(movie)
         }
 
@@ -51,6 +52,7 @@ class RecyclerMovieCatalogAdapter(
             titleVT.text = movie.name.toString()
             ratingBarVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
+            favoritesVT.isChecked = movie.isFavorite
         }
     }
 }
