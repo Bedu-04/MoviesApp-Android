@@ -12,6 +12,14 @@
         android:theme="@style/Theme.MoviesAppAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false">
+
+        </activity>
+        <activity
+            android:name=".activities.SignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MoviesActity"
             android:exported="false" />
         <activity
