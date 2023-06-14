@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.databinding.ActivitySignupBinding
 
@@ -15,7 +16,7 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_signup)
+        setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -29,7 +30,7 @@ class SignupActivity : AppCompatActivity() {
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
                         if (it.isSuccessful){
-                            val intent = Intent(this, LoginActivity::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                         } else{
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
