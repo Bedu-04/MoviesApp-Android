@@ -31,7 +31,7 @@ data class Movie (
         parcel.readString() ?: "",
         parcel.createStringArrayList() ?: emptyList(),
         parcel.createStringArrayList() ?: emptyList(),
-        parcel.readDouble(),
+        parcel.readDouble() ?: 0.0,
         parcel.readString() ?: "",
         parcel.readDouble(),
         Language.values()[parcel.readInt()],

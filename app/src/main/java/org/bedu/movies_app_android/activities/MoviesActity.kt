@@ -7,6 +7,6 @@ import org.bedu.movies_app_android.R
 class MoviesActity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movies_actity)
+
     }
 }

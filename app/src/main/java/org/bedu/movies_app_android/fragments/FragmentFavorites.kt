@@ -13,6 +13,7 @@ import org.bedu.movies_app_android.R
 
 import org.bedu.movies_app_android.adapters.RecyclerFavoritesAdapter
 import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.models.MovieResult
 import org.bedu.movies_app_android.store.StoreSingleton
 
 /**
@@ -58,7 +59,7 @@ class FragmentFavorites : Fragment() {
     }
 
 
-    private val goToDetailFragment:(Movie) -> Unit = { movie: Movie ->
+    private val goToDetailFragment:(MovieResult) -> Unit = { movie: MovieResult ->
         val nextFragment = FragmentDetail()
         val args = Bundle()
         val myArray = arrayOf(movie)
@@ -68,7 +69,7 @@ class FragmentFavorites : Fragment() {
     }
 
 
-    private val toggleMovie:(Movie) -> Unit = { movie: Movie ->
+    private val toggleMovie:(MovieResult) -> Unit = { movie: MovieResult ->
         var hasMovie = store.getFavorites().find { it -> (it.id == movie.id && it.isFavorite) }
         if (hasMovie !== null) {
             store.deleteFavoriteMovie(movie.id)

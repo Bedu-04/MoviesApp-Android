@@ -10,13 +10,15 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.models.MovieResult
 
 
 class RecyclerFavoritesAdapter(
-    private val movies: MutableList<Movie>,
-    private val goToDetailFragment: (Movie) -> Unit,
-    private val toggleFavorites: (Movie) -> Unit
+    private val movies: MutableList<MovieResult>,
+    private val goToDetailFragment: (MovieResult) -> Unit,
+    private val toggleFavorites: (MovieResult) -> Unit
 ) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerFavoritesAdapter.ViewHolder {
@@ -48,45 +50,12 @@ class RecyclerFavoritesAdapter(
         private val title = view.findViewById<TextView>(R.id.title_catalog)
 
 
-        fun bind(movie: Movie) {
-            title.text = movie.name
+        fun bind(movie: MovieResult) {
+            title.text = movie.title
             favorites_btn.isChecked = movie.isFavorite
-            rating_bar.rating = movie.rating.toFloat()
-            image_background.setImageResource(movie.image)
+            rating_bar.rating = movie.vote_average.toFloat()
+            /*image_background.setImageResource(movie.image)*/
+            Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(image_background);
         }
     }
 }
-
-/*
-class RecyclerGameAdapter(val games : List<Game>) : RecyclerView.Adapter<RecyclerGameAdapter.ViewHolder>(){
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerGameAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.game_item, parent, false)
-        return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: RecyclerGameAdapter.ViewHolder, position: Int) {
-        val game = games[position]
-        holder.bind(game)
-        }
-
-        override fun getItemCount(): Int {
-        return games.size
-        }
-
-class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
-private val title = view.findViewById<TextView>(R.id.gameTitle)
-private val category = view.findViewById<TextView>(R.id.gameCategory)
-private val type = view.findViewById<TextView>(R.id.gameType)
-private val rate = view.findViewById<RatingBar>(R.id.gameRaiting)
-
-
-        fun bind(game: Game){
-        title.text = game.title
-        category.text = game.category
-        type.text = game.type
-        rate.rating = game.rating
-        }
-        }
-
-        }*/

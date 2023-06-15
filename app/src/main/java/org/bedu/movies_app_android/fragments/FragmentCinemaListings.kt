@@ -1,21 +1,32 @@
 package org.bedu.movies_app_android.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.RecyclerMovieCatalogAdapter
-import org.bedu.movies_app_android.adapters.RecyclerMovieAdapter
-import org.bedu.movies_app_android.models.Category
-import org.bedu.movies_app_android.models.Language
+import org.bedu.movies_app_android.adapters.RecyclerMovieDBAdapter
+import org.bedu.movies_app_android.api.MovieDbApi
 import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.models.MovieDB
+import org.bedu.movies_app_android.models.MovieDBResult
+import org.bedu.movies_app_android.models.MovieResult
 import org.bedu.movies_app_android.store.StoreSingleton
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import androidx.lifecycle.lifecycleScope
+import kotlin.concurrent.thread
+import kotlin.math.log
 
 /**
  * A simple [Fragment] subclass.
@@ -45,46 +56,83 @@ class FragmentCinemaListings : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_cinema_listings, container, false)
 
         recycler = view.findViewById(R.id.recyclerCinemaListing)
 
-        recycler.adapter = RecyclerMovieCatalogAdapter(getProducts(), fun (movie:Movie) {
-            // Log.d("favorites", favorites.size.toString())
+        val adapter = RecyclerMovieDBAdapter(emptyList(), goToDetailFragment(), toggleFavorites())
+        recycler.adapter = adapter
 
-            // pasar al siguiente fragment la pelicula que se le dio click
-            val nextFragment = FragmentDetail()
-            val args = Bundle()
-            val miArreglo = arrayOf(movie)
-            args.putParcelableArray("arreglo", miArreglo)
-            nextFragment.arguments = args
-            parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
-
-        }, fun (movie:Movie) {
-            var hasMovie = store.getData().find { it -> (it.id == movie.id && it.isFavorite) }
-            if (hasMovie !== null) {
-                store.deleteFavoriteMovie(movie.id)
-            }else {
-                store.addFavoriteMovie(movie.id)
-            }
-
+        if (store.moviesDB.size == 0 ) {
+            moviesToAdapter(adapter)
         }
-        )
+
+        adapter.movies = store.moviesDB
+
 
         recycler.layoutManager = GridLayoutManager(activity, 3)
+
+
 
 
         return view
     }
 
-    //generamos datos dummy con este método
+
     private fun getProducts(): MutableList<Movie>{
         return StoreSingleton.getInstance().getData()
     }
 
+    private fun moviesToAdapter(adapter: RecyclerMovieDBAdapter) {
+        lifecycleScope.launch {
+            val call = MovieDbApi.endpoint.getCinemaListings();
+
+            call.enqueue(object: Callback<MovieDBResult>{
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(call: Call<MovieDBResult>, response: Response<MovieDBResult>) {
+                    val body = response.body()
+                    val movies = body?.results;
+                    if (movies !== null ){
+                        adapter.movies = movies
+                        store.moviesDB = movies as MutableList<MovieResult>
+                        adapter.notifyDataSetChanged()
+                    }
 
 
+                }
 
+                override fun onFailure(call: Call<MovieDBResult>, t: Throwable) {
+                    Log.d("ERROR", t.toString())
+                }
+
+            })
+        }
+    }
+
+
+    private fun goToDetailFragment() = fun (movie:MovieResult) {
+        // Log.d("favorites", favorites.size.toString())
+
+        // pasar al siguiente fragment la pelicula que se le dio click
+        val nextFragment = FragmentDetail()
+        val args = Bundle()
+        val myFavoriteList = arrayOf<MovieResult>(movie)
+        args.putParcelableArray("myFavoriteList", myFavoriteList)
+        nextFragment.arguments = args
+        parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
+
+    }
+
+    private fun toggleFavorites() = fun (movie:MovieResult) {
+        val hasMovie = store.getData().find { it -> (it.id == movie.id && it.isFavorite) }
+        if (hasMovie !== null) {
+            store.deleteFavoriteMovie(movie.id)
+        }else {
+            store.addFavoriteMovie(movie.id)
+        }
+
+    }
 
 
 

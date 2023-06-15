@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.adapters.RecyclerMovieDetailAdapter
 import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.models.MovieResult
 import org.bedu.movies_app_android.store.StoreSingleton
 
 /**
@@ -40,10 +41,10 @@ class FragmentDetail : Fragment() {
 
         val args = arguments
         if (args != null) {
-            val myArray = args.getParcelableArray("arreglo")
+            val myArray = args.getParcelableArray("myFavoriteList")
             if (myArray != null) {
                 // Utilizar el arreglo como desees
-                val movies = myArray.filterIsInstance<Movie>()
+                val movies = myArray.filterIsInstance<MovieResult>()
                 recycler.adapter =  RecyclerMovieDetailAdapter(movies)
             }
         }

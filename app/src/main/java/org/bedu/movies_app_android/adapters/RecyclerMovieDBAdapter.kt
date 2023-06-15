@@ -1,7 +1,8 @@
-package org.bedu.movies_app_android
+package org.bedu.movies_app_android.adapters
 
-import android.content.Context
-import android.util.Log
+import org.bedu.movies_app_android.R
+
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,35 +11,44 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.bedu.movies_app_android.models.Movie
+import com.squareup.picasso.Picasso
+import org.bedu.movies_app_android.models.MovieResult
 
 
-class RecyclerMovieCatalogAdapter(
+class RecyclerMovieDBAdapter(
 
-    var movies : MutableList<Movie>,
-    private val goToDetailFragment: (Movie) -> Unit,
-    private val toggleFavorites: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerMovieCatalogAdapter.ViewHolder>(){
+    var movies : List<MovieResult>?,
+    private val goToDetailFragment: (MovieResult) -> Unit,
+    private val toggleFavorites: (MovieResult) -> Unit) : RecyclerView.Adapter<RecyclerMovieDBAdapter.ViewHolder>(){
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieCatalogAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieDBAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_catalog, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerMovieCatalogAdapter.ViewHolder, position: Int) {
-        val movie = movies[position]
-        holder.bind(movie)
-        Log.d("lista", movie.isFavorite.toString())
+    override fun onBindViewHolder(holder: RecyclerMovieDBAdapter.ViewHolder, position: Int) {
+        val movie = movies?.get(position)
+        if (movie != null) {
+            holder.bind(movie)
+        }
+        // Log.d("lista", movie.isFavorite.toString())
 
         holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
-           toggleFavorites(movie)
+            if (movie != null) {
+                toggleFavorites(movie)
+            }
         }
 
-        holder.itemView.setOnClickListener{goToDetailFragment(movie)}
+        holder.itemView.setOnClickListener{
+            if (movie != null) {
+                goToDetailFragment(movie)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return movies.size
+        return movies?.size ?: 0
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -48,11 +58,14 @@ class RecyclerMovieCatalogAdapter(
         private val imageIV = view.findViewById<ImageView>(R.id.img)
         val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
 
-        fun bind(movie: Movie) {
-            titleVT.text = movie.name.toString()
+        fun bind(movie: MovieResult) {
+            /*titleVT.text = movie.name.toString()
             ratingBarVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
-            favoritesVT.isChecked = movie.isFavorite
+            favoritesVT.isChecked = movie.isFavorite*/
+
+            titleVT.text = movie.original_title
+            Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(imageIV);
         }
     }
 }
