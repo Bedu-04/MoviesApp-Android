@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="guideline2" type="id" />
+    <item name="movie_actors" type="id" />
+    <item name="guideline11" type="id" />
+    <item name="guideline5" type="id" />
+    <item name="movie_director" type="id" />
+    <item name="guideline18" type="id" />
+    <item name="movie_rating" type="id" />
+    <item name="movie_duration" type="id" />
+    <item name="guideline9" type="id" />
+    <item name="movie_resume" type="id" />
+    <item name="movie_poster" type="id" />
+    <item name="movie_title" type="id" />
+    <item name="icon_palomitas" type="id" />
+    <item name="icon_claqueta" type="id" />
+    <item name="icon_reloj" type="id" />
+    <item name="icon_actores" type="id" />
+    <item name="movie_date" type="id" />
+    <item name="movie_language" type="id" />
+</resources>

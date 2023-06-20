@@ -44,8 +44,10 @@ class FragmentDetail : Fragment() {
             val myArray = args.getParcelableArray("myFavoriteList")
             if (myArray != null) {
                 // Utilizar el arreglo como desees
-                val movies = myArray.filterIsInstance<MovieResult>()
-                recycler.adapter =  RecyclerMovieDetailAdapter(movies)
+                val movieSelected = myArray.filterIsInstance<MovieResult>()
+                val store = StoreSingleton.getInstance()
+                Log.d("MOVIES", store.moviesDB.toString())
+                recycler.adapter =  RecyclerMovieDetailAdapter(movieSelected,store.moviesDB)
             }
         }
 
