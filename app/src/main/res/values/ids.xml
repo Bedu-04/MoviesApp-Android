@@ -18,4 +18,5 @@
     <item name="icon_actores" type="id" />
     <item name="movie_date" type="id" />
     <item name="movie_language" type="id" />
+    <item name="navigation_drawer" type="id" />
 </resources>
