@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "64220006763",
+    "project_id": "movies-app-android-be936",
+    "storage_bucket": "movies-app-android-be936.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64220006763:android:14e376bd9712dfd71fa42e",
+        "android_client_info": {
+          "package_name": "org.bedu.movies_app_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64220006763-63sced4a9kiirei8cfhegqeaaa58469d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB45QUnjebm4Ex5b1RT9w7iqJNiw5HABeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64220006763-63sced4a9kiirei8cfhegqeaaa58469d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
