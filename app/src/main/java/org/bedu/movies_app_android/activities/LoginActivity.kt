@@ -3,6 +3,7 @@ package org.bedu.movies_app_android.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import org.bedu.movies_app_android.R
@@ -30,9 +31,11 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isSuccessful){
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                         finish()
                     } else{
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                        Log.d("Firebase",it.exception.toString())
                     }
                 }
             } else{
