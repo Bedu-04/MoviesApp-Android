@@ -1,7 +1,7 @@
 package org.bedu.movies_app_android.utils
 
-import org.bedu.movies_app_android.models.Cast
-import org.bedu.movies_app_android.models.Crew
+import org.bedu.movies_app_android.data.models.Cast
+import org.bedu.movies_app_android.data.models.Crew
 import org.junit.Assert.*
 import org.junit.Test
 

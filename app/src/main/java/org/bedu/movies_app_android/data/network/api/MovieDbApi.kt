@@ -1,8 +1,8 @@
-package org.bedu.movies_app_android.api
+package org.bedu.movies_app_android.data.network.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.bedu.movies_app_android.services.IMovieDBService
+import org.bedu.movies_app_android.data.network.services.IMovieDBService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit

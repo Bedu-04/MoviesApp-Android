@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.fragments
+package org.bedu.movies_app_android.ui.fragments
 
 import android.os.Bundle
 
@@ -11,17 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.bedu.movies_app_android.R
 
-import org.bedu.movies_app_android.adapters.RecyclerFavoritesAdapter
-import org.bedu.movies_app_android.models.Movie
-import org.bedu.movies_app_android.models.MovieResult
+import org.bedu.movies_app_android.ui.adapters.RecyclerFavoritesAdapter
+import org.bedu.movies_app_android.data.models.Movie
+import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.store.StoreSingleton
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentFavorites.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 class FragmentFavorites : Fragment() {
@@ -49,8 +42,6 @@ class FragmentFavorites : Fragment() {
         val favoritesMovies = store.getFavorites()
 
         val textFavorites = view.findViewById<TextView>(R.id.text_wo_favorites)
-
-
 
         if(favoritesMovies.size > 0){textFavorites.text = getString(R.string.your_favorites_movies)} else {textFavorites.text = getString(R.string.dont_have_your_favorites_movies)}
 

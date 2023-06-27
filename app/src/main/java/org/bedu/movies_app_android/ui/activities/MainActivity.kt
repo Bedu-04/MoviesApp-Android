@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.activities
+package org.bedu.movies_app_android.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,8 +14,8 @@ import com.google.android.material.navigation.NavigationView
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.databinding.ActivityMainBinding
 
-import org.bedu.movies_app_android.fragments.FragmentCinemaListings
-import org.bedu.movies_app_android.fragments.FragmentFavorites
+import org.bedu.movies_app_android.ui.fragments.FragmentCinemaListings
+import org.bedu.movies_app_android.ui.fragments.FragmentFavorites
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val binding by lazy {ActivityMainBinding.inflate(layoutInflater) }

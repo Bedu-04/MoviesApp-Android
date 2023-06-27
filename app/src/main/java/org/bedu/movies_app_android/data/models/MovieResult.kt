@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.models
+package org.bedu.movies_app_android.data.models
 
 import android.os.Parcel
 import android.os.Parcelable

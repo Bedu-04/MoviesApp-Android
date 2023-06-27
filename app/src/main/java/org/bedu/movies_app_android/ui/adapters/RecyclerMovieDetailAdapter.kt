@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.adapters
+package org.bedu.movies_app_android.ui.adapters
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.bedu.movies_app_android.R
-import org.bedu.movies_app_android.models.Cast
-import org.bedu.movies_app_android.models.Crew
-import org.bedu.movies_app_android.models.MovieResult
+import org.bedu.movies_app_android.data.models.Cast
+import org.bedu.movies_app_android.data.models.Crew
+import org.bedu.movies_app_android.data.models.MovieResult
 
 
 class RecyclerMovieDetailAdapter(var movieSelected : List<MovieResult>, var actors : List<Cast>, var director: Crew) : RecyclerView.Adapter<RecyclerMovieDetailAdapter.ViewHolder>(){

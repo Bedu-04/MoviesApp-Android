@@ -1,8 +1,8 @@
-package org.bedu.movies_app_android.services
+package org.bedu.movies_app_android.data.network.services
 
-import org.bedu.movies_app_android.models.CreditsResult
-import org.bedu.movies_app_android.models.MovieDB
-import org.bedu.movies_app_android.models.MovieDBResult
+import org.bedu.movies_app_android.data.models.CreditsResult
+import org.bedu.movies_app_android.data.models.MovieDB
+import org.bedu.movies_app_android.data.models.MovieDBResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

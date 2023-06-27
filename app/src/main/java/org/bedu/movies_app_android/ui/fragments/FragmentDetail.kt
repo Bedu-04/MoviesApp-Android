@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.fragments
+package org.bedu.movies_app_android.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,34 +9,39 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.bedu.movies_app_android.R
-import org.bedu.movies_app_android.adapters.RecyclerMovieDBAdapter
-import org.bedu.movies_app_android.adapters.RecyclerMovieDetailAdapter
-import org.bedu.movies_app_android.api.MovieDbApi
-import org.bedu.movies_app_android.models.Cast
-import org.bedu.movies_app_android.models.CreditsResult
-import org.bedu.movies_app_android.models.Crew
-import org.bedu.movies_app_android.models.Movie
-import org.bedu.movies_app_android.models.MovieResult
-import org.bedu.movies_app_android.store.StoreSingleton
+import org.bedu.movies_app_android.ui.adapters.RecyclerMovieDetailAdapter
+import org.bedu.movies_app_android.data.network.api.MovieDbApi
+import org.bedu.movies_app_android.data.models.Cast
+import org.bedu.movies_app_android.data.models.CreditsResult
+import org.bedu.movies_app_android.data.models.Crew
+import org.bedu.movies_app_android.data.models.MovieResult
+import org.bedu.movies_app_android.data.repository.MovieRepository
+import org.bedu.movies_app_android.ui.presenters.FragmentDetailContract
+import org.bedu.movies_app_android.ui.presenters.FragmentDetailPresenter
 import org.bedu.movies_app_android.utils.getDirector
 import org.bedu.movies_app_android.utils.getMovieCast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FragmentDetail : Fragment() {
+class FragmentDetail : Fragment(), FragmentDetailContract.View {
+    private lateinit var adapter : RecyclerMovieDetailAdapter
+    private lateinit var presenter: FragmentDetailContract.Presenter
+
     private lateinit var recycler: RecyclerView
     private var cast: MutableList<Cast> = mutableListOf()
     private var movieSelected:  List<MovieResult> = emptyList()
     private var director: Crew = Crew(profile_path = null)
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val movieRepository = MovieRepository()
+        presenter = FragmentDetailPresenter(this, movieRepository)
 
     }
 
@@ -55,14 +60,16 @@ class FragmentDetail : Fragment() {
             val myArray = args.getParcelableArray("myFavoriteList")
             if (myArray != null) {
                 movieSelected = myArray.filterIsInstance<MovieResult>()
-                val adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director)
+                adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director)
 
-                getMovieCredits(movieSelected[0].id){cast, director ->
+                presenter.getMovieCastById(movieSelected[0].id)
+
+                /*getMovieCredits(movieSelected[0].id){cast, director ->
                     adapter.actors = cast
                     adapter.director = director
                     recycler.adapter = adapter
                     adapter.notifyDataSetChanged()
-                }
+                }*/
             }
         }
 
@@ -71,7 +78,7 @@ class FragmentDetail : Fragment() {
         return view
     }
 
-
+/*
     private fun getMovieCredits(movieId: Int, callback: (List<Cast>, Crew) -> Unit) {
         lifecycleScope.launch {
             val call = MovieDbApi.endpoint.getCreditsByMovieId(movieId.toString())
@@ -100,6 +107,14 @@ class FragmentDetail : Fragment() {
                 }
             })
         }
+    }*/
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun showData(cast: List<Cast>, director: Crew) {
+        adapter.actors = cast
+        adapter.director = director
+        recycler.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
 }

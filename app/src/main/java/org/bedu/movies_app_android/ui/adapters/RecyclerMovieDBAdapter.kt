@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.adapters
+package org.bedu.movies_app_android.ui.adapters
 
 import org.bedu.movies_app_android.R
 
@@ -12,7 +12,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import org.bedu.movies_app_android.models.MovieResult
+import org.bedu.movies_app_android.data.models.MovieResult
 
 
 class RecyclerMovieDBAdapter(
@@ -22,12 +22,12 @@ class RecyclerMovieDBAdapter(
     private val toggleFavorites: (MovieResult) -> Unit) : RecyclerView.Adapter<RecyclerMovieDBAdapter.ViewHolder>(){
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerMovieDBAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_catalog, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerMovieDBAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies?.get(position)
         if (movie != null) {
             holder.bind(movie)
@@ -44,6 +44,8 @@ class RecyclerMovieDBAdapter(
                 goToDetailFragment(movie)
             }
         }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -54,7 +56,7 @@ class RecyclerMovieDBAdapter(
 
         private val titleVT = view.findViewById<TextView>(R.id.title_catalog)
         private val ratingBarPopularity = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
-        private val posterMovie = view.findViewById<ImageView>(R.id.img)
+        val posterMovie = view.findViewById<ImageView>(R.id.img)
         val favoriteCheck: CheckBox = view.findViewById(R.id.cbHeart)
 
         fun bind(movie: MovieResult) {

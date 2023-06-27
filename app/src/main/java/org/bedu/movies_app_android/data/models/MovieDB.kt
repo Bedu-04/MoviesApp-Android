@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.models
+package org.bedu.movies_app_android.data.models
 
 import com.google.gson.annotations.SerializedName
 

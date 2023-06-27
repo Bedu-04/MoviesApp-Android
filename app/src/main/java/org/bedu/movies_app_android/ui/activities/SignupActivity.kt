@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.activities
+package org.bedu.movies_app_android.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

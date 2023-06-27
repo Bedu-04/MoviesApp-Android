@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.fragments
+package org.bedu.movies_app_android.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -14,12 +14,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.RecyclerMovieCatalogAdapter
-import org.bedu.movies_app_android.adapters.RecyclerMovieDBAdapter
-import org.bedu.movies_app_android.api.MovieDbApi
-import org.bedu.movies_app_android.models.Movie
-import org.bedu.movies_app_android.models.MovieDB
-import org.bedu.movies_app_android.models.MovieDBResult
-import org.bedu.movies_app_android.models.MovieResult
+import org.bedu.movies_app_android.ui.adapters.RecyclerMovieDBAdapter
+import org.bedu.movies_app_android.data.network.api.MovieDbApi
+import org.bedu.movies_app_android.data.models.Movie
+import org.bedu.movies_app_android.data.models.MovieDB
+import org.bedu.movies_app_android.data.models.MovieDBResult
+import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.store.StoreSingleton
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +27,10 @@ import retrofit2.Response
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.bedu.movies_app_android.models.CreditsResult
+import org.bedu.movies_app_android.data.models.CreditsResult
+import org.bedu.movies_app_android.data.repository.MovieRepository
+import org.bedu.movies_app_android.ui.presenters.FragmentCinemaPresenter
+import org.bedu.movies_app_android.ui.presenters.FragmentContract
 import kotlin.concurrent.thread
 import kotlin.math.log
 
@@ -40,14 +43,18 @@ import kotlin.math.log
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class FragmentCinemaListings : Fragment() {
+class FragmentCinemaListings : Fragment(), FragmentContract.View {
     private lateinit var recycler: RecyclerView
+    private lateinit var adapter : RecyclerMovieDBAdapter
+    private lateinit var presenter: FragmentContract.Presenter
     private var store = StoreSingleton.getInstance()
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val movieRepository = MovieRepository()
+        presenter = FragmentCinemaPresenter(this, movieRepository)
     }
 
     override fun onCreateView(
@@ -60,11 +67,12 @@ class FragmentCinemaListings : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerCinemaListing)
 
-        val adapter = RecyclerMovieDBAdapter(emptyList(), goToDetailFragment(), toggleFavorites())
+        adapter = RecyclerMovieDBAdapter(emptyList(), goToDetailFragment(), toggleFavorites())
+
         recycler.adapter = adapter
 
         if (store.moviesDB.size == 0 ) {
-            moviesToAdapter(adapter)
+            presenter.fetchData()
         }
 
         adapter.movies = store.moviesDB
@@ -74,36 +82,7 @@ class FragmentCinemaListings : Fragment() {
         return view
     }
 
-
-    private fun moviesToAdapter(adapter: RecyclerMovieDBAdapter) {
-        lifecycleScope.launch {
-            val call = MovieDbApi.endpoint.getCinemaListings();
-
-            call.enqueue(object: Callback<MovieDBResult>{
-                @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<MovieDBResult>, response: Response<MovieDBResult>) {
-                    val body = response.body()
-                    val movies = body?.results;
-                    if (movies !== null ){
-                        adapter.movies = movies
-                        store.moviesDB = movies as MutableList<MovieResult>
-                        adapter.notifyDataSetChanged()
-                    }
-
-
-                }
-
-                override fun onFailure(call: Call<MovieDBResult>, t: Throwable) {
-                    Log.d("ERROR", t.toString())
-                }
-
-            })
-        }
-    }
-
-
-
-    private fun goToDetailFragment() = fun (movie:MovieResult) {
+    private fun goToDetailFragment() = fun (movie: MovieResult) {
         val nextFragment = FragmentDetail()
         val args = Bundle()
         val myFavoriteList = arrayOf<MovieResult>(movie)
@@ -114,7 +93,7 @@ class FragmentCinemaListings : Fragment() {
 
     }
 
-    private fun toggleFavorites() = fun (movie:MovieResult) {
+    private fun toggleFavorites() = fun (movie: MovieResult) {
         val hasMovie = store.moviesDB.find { it -> (it.id == movie.id && it.isFavorite) }
         if (hasMovie !== null) {
             store.deleteFavoriteMovie(movie.id)
@@ -122,6 +101,13 @@ class FragmentCinemaListings : Fragment() {
             store.addFavoriteMovie(movie.id)
         }
 
+    }
+
+
+    override fun showData(data: List<MovieResult>) {
+        adapter.movies = data
+        store.moviesDB = data as MutableList<MovieResult>
+        adapter.notifyDataSetChanged()
     }
 
 
@@ -145,4 +131,5 @@ class FragmentCinemaListings : Fragment() {
                 }
             }
     }
+
 }

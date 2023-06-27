@@ -1,4 +1,4 @@
-package org.bedu.movies_app_android.adapters
+package org.bedu.movies_app_android.ui.adapters
 
 
 import org.bedu.movies_app_android.R
@@ -11,8 +11,8 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import org.bedu.movies_app_android.models.Movie
-import org.bedu.movies_app_android.models.MovieResult
+import org.bedu.movies_app_android.data.models.Movie
+import org.bedu.movies_app_android.data.models.MovieResult
 
 
 class RecyclerFavoritesAdapter(
@@ -21,12 +21,12 @@ class RecyclerFavoritesAdapter(
     private val toggleFavorites: (MovieResult) -> Unit
 ) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerFavoritesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_catalog, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerFavoritesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
 

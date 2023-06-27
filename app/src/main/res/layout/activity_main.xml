@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context=".ui.activities.MainActivity"
     android:id="@+id/drawer_layout"
     >
     <RelativeLayout
@@ -29,7 +29,7 @@
             android:id="@+id/containerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="org.bedu.movies_app_android.fragments.FragmentCinemaListings"
+            android:name="org.bedu.movies_app_android.ui.fragments.FragmentCinemaListings"
             tools:layout="@layout/fragment_cinema_listings"
             android:layout_marginTop="56dp"
             />

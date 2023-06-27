@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.bedu.movies_app_android.models.Movie
+import org.bedu.movies_app_android.data.models.Movie
 
 
 class RecyclerMovieCatalogAdapter(
