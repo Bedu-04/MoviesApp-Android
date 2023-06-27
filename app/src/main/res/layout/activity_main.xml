@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
                     app:labelVisibilityMode="labeled"
+                    android:layout_gravity="center"
                     app:menu="@menu/navigation_menu" />
 
             </com.google.android.material.bottomappbar.BottomAppBar>

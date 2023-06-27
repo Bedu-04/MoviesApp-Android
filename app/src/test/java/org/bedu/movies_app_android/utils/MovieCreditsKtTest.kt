@@ -19,7 +19,6 @@ class MovieCreditsKtTest{
 
         //Then
         assertEquals(0, result.size)
-
     }
 
 
@@ -39,7 +38,6 @@ class MovieCreditsKtTest{
         assertEquals(1, result.size)
 
         assertEquals(profilePath, result[0].profile_path)
-
     }
 
 
@@ -57,7 +55,6 @@ class MovieCreditsKtTest{
 
         //Then
         assertEquals("/yW6eiXF0CEXCHpqxqvEUZmq2mUq.jpg", result.profile_path)
-
     }
 
 
@@ -78,7 +75,6 @@ class MovieCreditsKtTest{
         assertNotEquals("/yW6eiXF0CEXCHpqxqvEUZmq2mUq.jpg", profilePath)
         assertEquals(profilePath, result.profile_path)
         assertEquals("Scott Walker", result.name)
-
     }
 
 }

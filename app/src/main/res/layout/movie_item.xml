@@ -45,7 +45,7 @@
                     android:layout_weight="1"
                     android:text="☆"
                     android:textColor="@color/yellow"
-                    android:textSize="28dp"
+                    android:textSize="32dp"
                     android:textAlignment="textEnd"
                     />
                 <TextView
@@ -54,31 +54,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/starstext"
+                    android:textSize="28dp"
                     android:textAlignment="textStart"
                     />
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                >
-
-
-                <TextView
-                    android:id="@+id/movie_duration"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Elemento 2"
-                    android:gravity="center"
-                     />
-            </LinearLayout>
-
-
-
 
 
             <TextView
