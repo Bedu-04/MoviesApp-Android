@@ -1,15 +1,14 @@
 package org.bedu.movies_app_android
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import org.bedu.movies_app_android.models.Movie
 
 
@@ -30,9 +29,11 @@ class RecyclerMovieCatalogAdapter(
         holder.bind(movie)
         Log.d("lista", movie.isFavorite.toString())
 
-        holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
+        holder.favoritesVT.setOnClickListener {
+
            toggleFavorites(movie)
         }
+
 
         holder.itemView.setOnClickListener{goToDetailFragment(movie)}
     }
@@ -46,14 +47,31 @@ class RecyclerMovieCatalogAdapter(
         private val titleVT = view.findViewById<TextView>(R.id.title_catalog)
         private val ratingBarVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val imageIV = view.findViewById<ImageView>(R.id.img)
-        val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
+        val favoritesVT = view.findViewById<ImageView>(R.id.likeImageView)
 
         fun bind(movie: Movie) {
             titleVT.text = movie.name.toString()
             ratingBarVT.rating = movie.rating.toFloat()
             imageIV.setImageResource(movie.image)
-            favoritesVT.isChecked = movie.isFavorite
+            favoritesVT.isPressed = movie.isFavorite
         }
+    }
+
+    var like = false
+    likeImageView.setOnClickListener {it
+        like = likeAnimation(likeImageView, R.raw.heart_animation, like)
+    }
+
+    private fun likeAnimation(imageView: LottieAnimationView,
+                              animation: Int,
+                              like: Boolean) : Boolean{
+        if (!like){
+            imageView.setAnimation(animation)
+            imageView.playAnimation()
+        } else{
+            imageView.setImageResource(R.drawable.like_outlined)
+        }
+        return !like
     }
 }
 

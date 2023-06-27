@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setCurrentFragment(cinemaFragment)
         createFragments()
-
-
     }
 
     private fun setCinemaFragment(): FragmentCinemaListings {

@@ -134,16 +134,27 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3"
          />
 
-    <CheckBox
-        android:id="@+id/cbHeart"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/likeImageView"
         android:layout_width="59dp"
         android:layout_height="59dp"
-        android:button="@drawable/selector_favorites_item"
+        android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
         app:layout_constraintVertical_bias="1.0"
-        app:useMaterialThemeColors="false" />
+        app:srcCompat="@drawable/like_outlined" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<CheckBox
+    android:id="@+id/cbHeart"
+    android:layout_width="59dp"
+    android:layout_height="59dp"
+    android:button="@drawable/selector_favorites_item"
+    app:layout_constraintBottom_toTopOf="@+id/guideline15"
+    app:layout_constraintEnd_toStartOf="@+id/guideline12"
+    app:layout_constraintTop_toTopOf="@+id/guideline7"
+    app:layout_constraintVertical_bias="1.0"
+    app:useMaterialThemeColors="false" />-->
