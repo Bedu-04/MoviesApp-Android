@@ -49,7 +49,10 @@ class FragmentFavorites : Fragment() {
         val favoritesMovies = store.getFavorites()
 
         val textFavorites = view.findViewById<TextView>(R.id.text_wo_favorites)
-        if(favoritesMovies.size > 0){textFavorites.text = "Estas son tus películas en favoritos"} else {textFavorites.text = "No cuentas con películas en estos momentos"}
+
+
+
+        if(favoritesMovies.size > 0){textFavorites.text = getString(R.string.your_favorites_movies)} else {textFavorites.text = getString(R.string.dont_have_your_favorites_movies)}
 
         recycler.adapter = RecyclerFavoritesAdapter(favoritesMovies, goToDetailFragment,toggleMovie)
 
@@ -63,22 +66,18 @@ class FragmentFavorites : Fragment() {
         val nextFragment = FragmentDetail()
         val args = Bundle()
         val myArray = arrayOf(movie)
-        args.putParcelableArray("arreglo", myArray)
+        args.putParcelableArray("myFavoriteList", myArray)
         nextFragment.arguments = args
         parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
     }
 
 
     private val toggleMovie:(MovieResult) -> Unit = { movie: MovieResult ->
-        var hasMovie = store.getFavorites().find { it -> (it.id == movie.id && it.isFavorite) }
+        val hasMovie = store.getFavorites().find { it -> (it.id == movie.id && it.isFavorite) }
         if (hasMovie !== null) {
             store.deleteFavoriteMovie(movie.id)
-
-            // recycler.post{adapter.notifyDataSetChanged()}
-            // adapter.updateMoviesDeferred(store.getFavorites())
         }else {
             store.addFavoriteMovie(movie.id)
-            // recycler.post{adapter.notifyDataSetChanged()}
         }
     }
 

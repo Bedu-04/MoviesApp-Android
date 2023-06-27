@@ -32,9 +32,8 @@ class RecyclerMovieDBAdapter(
         if (movie != null) {
             holder.bind(movie)
         }
-        // Log.d("lista", movie.isFavorite.toString())
 
-        holder.favoritesVT.setOnCheckedChangeListener { _, _ ->
+        holder.favoriteCheck.setOnCheckedChangeListener { _, _ ->
             if (movie != null) {
                 toggleFavorites(movie)
             }
@@ -54,52 +53,15 @@ class RecyclerMovieDBAdapter(
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         private val titleVT = view.findViewById<TextView>(R.id.title_catalog)
-        private val ratingBarVT = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
-        private val imageIV = view.findViewById<ImageView>(R.id.img)
-        val favoritesVT = view.findViewById<CheckBox>(R.id.cbHeart)
+        private val ratingBarPopularity = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
+        private val posterMovie = view.findViewById<ImageView>(R.id.img)
+        val favoriteCheck: CheckBox = view.findViewById(R.id.cbHeart)
 
         fun bind(movie: MovieResult) {
-            /*titleVT.text = movie.name.toString()
-            ratingBarVT.rating = movie.rating.toFloat()
-            imageIV.setImageResource(movie.image)
-            favoritesVT.isChecked = movie.isFavorite*/
-
             titleVT.text = movie.original_title
-            Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(imageIV);
+            favoriteCheck.isChecked = movie.isFavorite
+            ratingBarPopularity.rating = movie.vote_average.toFloat()
+            Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(posterMovie);
         }
     }
 }
-
-/*
-class RecyclerGameAdapter(val games : List<Game>) : RecyclerView.Adapter<RecyclerGameAdapter.ViewHolder>(){
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerGameAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.game_item, parent, false)
-        return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: RecyclerGameAdapter.ViewHolder, position: Int) {
-        val game = games[position]
-        holder.bind(game)
-        }
-
-        override fun getItemCount(): Int {
-        return games.size
-        }
-
-class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
-private val title = view.findViewById<TextView>(R.id.gameTitle)
-private val category = view.findViewById<TextView>(R.id.gameCategory)
-private val type = view.findViewById<TextView>(R.id.gameType)
-private val rate = view.findViewById<RatingBar>(R.id.gameRaiting)
-
-
-        fun bind(game: Game){
-        title.text = game.title
-        category.text = game.category
-        type.text = game.type
-        rate.rating = game.rating
-        }
-        }
-
-        }*/

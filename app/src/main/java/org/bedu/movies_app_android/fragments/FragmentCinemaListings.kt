@@ -25,6 +25,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.bedu.movies_app_android.models.CreditsResult
 import kotlin.concurrent.thread
 import kotlin.math.log
 
@@ -38,12 +41,8 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class FragmentCinemaListings : Fragment() {
-    // TODO: Rename and change types of parameters
     private lateinit var recycler: RecyclerView
     private var store = StoreSingleton.getInstance()
-    // private var listener : (Product) ->Unit = {}
-    // private var listener : (Movie) ->Unit = {}
-    private var favorites = StoreSingleton.getInstance().getFavorites()
 
 
 
@@ -70,19 +69,11 @@ class FragmentCinemaListings : Fragment() {
 
         adapter.movies = store.moviesDB
 
-
         recycler.layoutManager = GridLayoutManager(activity, 3)
-
-
-
 
         return view
     }
 
-
-    private fun getProducts(): MutableList<Movie>{
-        return StoreSingleton.getInstance().getData()
-    }
 
     private fun moviesToAdapter(adapter: RecyclerMovieDBAdapter) {
         lifecycleScope.launch {
@@ -111,13 +102,12 @@ class FragmentCinemaListings : Fragment() {
     }
 
 
-    private fun goToDetailFragment() = fun (movie:MovieResult) {
-        // Log.d("favorites", favorites.size.toString())
 
-        // pasar al siguiente fragment la pelicula que se le dio click
+    private fun goToDetailFragment() = fun (movie:MovieResult) {
         val nextFragment = FragmentDetail()
         val args = Bundle()
         val myFavoriteList = arrayOf<MovieResult>(movie)
+
         args.putParcelableArray("myFavoriteList", myFavoriteList)
         nextFragment.arguments = args
         parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
@@ -125,7 +115,7 @@ class FragmentCinemaListings : Fragment() {
     }
 
     private fun toggleFavorites() = fun (movie:MovieResult) {
-        val hasMovie = store.getData().find { it -> (it.id == movie.id && it.isFavorite) }
+        val hasMovie = store.moviesDB.find { it -> (it.id == movie.id && it.isFavorite) }
         if (hasMovie !== null) {
             store.deleteFavoriteMovie(movie.id)
         }else {

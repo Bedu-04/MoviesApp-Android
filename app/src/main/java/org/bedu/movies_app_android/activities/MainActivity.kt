@@ -20,7 +20,6 @@ import org.bedu.movies_app_android.fragments.FragmentFavorites
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val binding by lazy {ActivityMainBinding.inflate(layoutInflater) }
 
-
     private val cinemaFragment = FragmentCinemaListings()
 
     private val favoritesFragment = FragmentFavorites()
@@ -44,15 +43,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun setCinemaFragment(): FragmentCinemaListings {
-        val fragment = FragmentCinemaListings()
-        /*fragment.setListener {
-            Log.d("name", it.name)
-        }*/
-
-        return fragment
-    }
-
     private fun createFragments(){
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
@@ -67,18 +57,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     true
                 }
 
-               /* R.id.nav_history->{
-                    val args = Bundle()
-                    val shared: SharedPreferences = getSharedPreferences("shared", MODE_PRIVATE)
-                    args.putInt("idConductor", shared.getInt("idConductor",10))
-                    args.putString("token", shared.getString("token","0"))
-                    tercerFragment.arguments=args
-                    // setCurrentFragment(tercerFragment)
-                    // true
-                    setCurrentFragment(tercerFragment)
-                    it.actionView?.clearFocus()
-                    true
-                }*/
                 else -> false
             }
         }
@@ -95,16 +73,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        /*// Manejar los eventos de los elementos de navegación aquí
-        when (item.itemId) {
-            R.id.nav_item1 -> showToast("Item 1 selected")
-            R.id.nav_item2 -> showToast("Item 2 selected")
-            R.id.nav_item3 -> showToast("Item 3 selected")
-            // Agregar más casos para otros elementos de navegación
+        Log.d("DRAWER", item.toString())
+        when(item.itemId){
+            R.id.nav_cinema_listings ->{
+                setCurrentFragment(cinemaFragment)
+                item.actionView?.clearFocus()
+                true
+            }
+            R.id.nav_favorite_movies ->{
+                setCurrentFragment(favoritesFragment)
+                item.actionView?.clearFocus()
+                true
+            }
         }
 
-        // Cerrar el drawer después de seleccionar un elemento
-        drawerLayout.closeDrawer(GravityCompat.START)*/
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
