@@ -60,10 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 else -> false
             }
         }
-//        bottomNavigationView.getOrCreateBadge(R.id.nav_home).apply {
-//            isVisible=true
-//            number=8
-//        }
+
     }
     private fun setCurrentFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().apply {
