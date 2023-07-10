@@ -5,6 +5,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\kewyn\\Documents\\Android\\DebugKey\\debug.keystore')
+            storePassword 'moviesapp'
+            keyAlias 'moviesapp'
+            keyPassword 'moviesapp'
+        }
+    }
     namespace 'org.bedu.movies_app_android'
     compileSdk 33
 
@@ -51,7 +59,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+
+    //firebase auth
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
 
     // test
     testImplementation "com.google.truth:truth:1.1.2"
