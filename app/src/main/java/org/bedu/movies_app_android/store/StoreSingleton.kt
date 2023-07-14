@@ -19,6 +19,7 @@ import retrofit2.Response
 
 class StoreSingleton private constructor() {
     var moviesDB: MutableList<MovieResult> = mutableListOf<MovieResult>()
+    var searchMoviesDB: MutableList<MovieResult> = mutableListOf<MovieResult>()
 
     companion object {
         @Volatile

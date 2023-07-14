@@ -4,20 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.SearchView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.databinding.ActivityMainBinding
-
 import org.bedu.movies_app_android.ui.fragments.FragmentCinemaListings
 import org.bedu.movies_app_android.ui.fragments.FragmentFavorites
+import org.bedu.movies_app_android.ui.fragments.OnSearchListener
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(),OnSearchListener ,NavigationView.OnNavigationItemSelectedListener {
     private val binding by lazy {ActivityMainBinding.inflate(layoutInflater) }
 
     private val cinemaFragment = FragmentCinemaListings()
@@ -36,6 +34,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         binding.navigationDrawer.setNavigationItemSelectedListener(this)
+
+        /*Search view*/
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                onSearch(query, false)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean = false
+
+        })
+
+        binding.searchView.setOnCloseListener {
+            Log.d("s", "d")
+            onSearch("", true)
+            false
+        }
+
 
         setCurrentFragment(cinemaFragment)
         createFragments()
@@ -96,4 +113,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // finish()
         }
     }
+
+    override fun onSearch(query: String, resetMovies: Boolean) {
+        // Envia el término de búsqueda al Fragmento
+        val fragment = supportFragmentManager.findFragmentById(R.id.containerView) as? FragmentCinemaListings
+        fragment?.onSearch(query, resetMovies)
+    }
+
+
 }

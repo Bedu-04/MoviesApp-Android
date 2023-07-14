@@ -1,13 +1,18 @@
 package org.bedu.movies_app_android.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
@@ -43,11 +48,17 @@ import kotlin.math.log
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class FragmentCinemaListings : Fragment(), FragmentContract.View {
+interface OnSearchListener {
+    fun onSearch(query: String, resetMovies: Boolean = false)
+}
+
+class FragmentCinemaListings : Fragment(), OnSearchListener,FragmentContract.View {
+    private var store = StoreSingleton.getInstance()
     private lateinit var recycler: RecyclerView
     private lateinit var adapter : RecyclerMovieDBAdapter
     private lateinit var presenter: FragmentContract.Presenter
-    private var store = StoreSingleton.getInstance()
+    private var searchListener: OnSearchListener? = null
+    private var isLoading = MutableLiveData<Boolean>(false)
 
 
 
@@ -65,6 +76,10 @@ class FragmentCinemaListings : Fragment(), FragmentContract.View {
 
         val view = inflater.inflate(R.layout.fragment_cinema_listings, container, false)
 
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress);
+
+        progressBar.isVisible = true;
+
         recycler = view.findViewById(R.id.recyclerCinemaListing)
 
         adapter = RecyclerMovieDBAdapter(emptyList(), goToDetailFragment(), toggleFavorites())
@@ -72,10 +87,12 @@ class FragmentCinemaListings : Fragment(), FragmentContract.View {
         recycler.adapter = adapter
 
         if (store.moviesDB.size == 0 ) {
-            presenter.fetchData()
+            presenter.getMovies()
         }
 
         adapter.movies = store.moviesDB
+
+        progressBar.isVisible = false;
 
         recycler.layoutManager = GridLayoutManager(activity, 3)
 
@@ -104,10 +121,46 @@ class FragmentCinemaListings : Fragment(), FragmentContract.View {
     }
 
 
-    override fun showData(data: List<MovieResult>) {
+    @SuppressLint("NotifyDataSetChanged")
+    override fun showData(data: List<MovieResult>, isSearch: Boolean) {
         adapter.movies = data
-        store.moviesDB = data as MutableList<MovieResult>
+        if (isSearch) store.searchMoviesDB = data as MutableList<MovieResult>
+        else store.moviesDB = data as MutableList<MovieResult>
         adapter.notifyDataSetChanged()
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun resetData() {
+        adapter.movies = store.moviesDB
+        adapter.notifyDataSetChanged()
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            searchListener = context as OnSearchListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement OnSearchListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        searchListener = null
+    }
+
+    override fun onSearch(query: String, resetMovies: Boolean) {
+        if (!resetMovies){
+            presenter.searchMovieByName(query)
+            return
+        }
+        Log.d("REINICIO", "debo reiniciar pelis")
+        resetData()
+
+
+
     }
 
 

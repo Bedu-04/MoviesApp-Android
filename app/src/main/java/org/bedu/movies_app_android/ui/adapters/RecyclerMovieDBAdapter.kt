@@ -1,5 +1,6 @@
 package org.bedu.movies_app_android.ui.adapters
 
+import android.util.Log
 import org.bedu.movies_app_android.R
 
 
@@ -28,6 +29,7 @@ class RecyclerMovieDBAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d("MOVIES", movies.toString())
         val movie = movies?.get(position)
         if (movie != null) {
             holder.bind(movie)

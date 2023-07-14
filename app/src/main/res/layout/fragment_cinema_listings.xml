@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.FragmentCinemaListings">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progress"
+        android:visibility="invisible"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCinemaListing"
         android:layout_width="match_parent"

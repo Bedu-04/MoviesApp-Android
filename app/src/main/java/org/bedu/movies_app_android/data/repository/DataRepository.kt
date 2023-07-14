@@ -7,4 +7,6 @@ interface DataRepository<T> {
     fun getMovies(callback: (List<T>) -> Unit)
 
     fun getCastMovieById(movieId: String ,callback: (List<Cast>, Crew) -> Unit)
+
+    fun getMoviesByName(movieName: String, callback: (List<T>) -> Unit)
 }

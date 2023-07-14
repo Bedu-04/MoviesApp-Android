@@ -3,7 +3,9 @@ package org.bedu.movies_app_android.data.repository
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.bedu.movies_app_android.data.models.Cast
 import org.bedu.movies_app_android.data.models.CreditsResult
 import org.bedu.movies_app_android.data.models.Crew
@@ -67,6 +69,31 @@ class MovieRepository: DataRepository<MovieResult> {
 
             }
         })
+    }
+
+    override fun getMoviesByName(movieName: String, callback: (List<MovieResult>) -> Unit) {
+        val call = MovieDbApi.endpoint.searchMovie(movieName);
+
+        call.enqueue(object: Callback<MovieDBResult> {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onResponse(call: Call<MovieDBResult>, response: Response<MovieDBResult>) {
+                val body = response.body()
+                val movies = body?.results;
+                if (movies !== null ){
+                    callback(movies)
+                }else {
+                    callback(emptyList())
+                }
+
+
+            }
+
+
+            override fun onFailure(call: Call<MovieDBResult>, t: Throwable) {
+                Log.d("ERROR", t.toString())
+            }
+        })
+
     }
 
 }
