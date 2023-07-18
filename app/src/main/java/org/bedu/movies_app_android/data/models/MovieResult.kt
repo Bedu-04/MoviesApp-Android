@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class MovieResult(
     val adult: Boolean,
     val backdrop_path: String,
-    val genre_ids: List<Int>,
+
     val id: Int,
     val original_language: String,
     val original_title: String,
@@ -23,7 +23,6 @@ data class MovieResult(
     constructor(parcel: Parcel) : this(
         parcel.readByte() != 0.toByte(),
         parcel.readString() ?: "",
-        (parcel.createStringArrayList() ?: emptyList()) as List<Int>,
         parcel.readInt()?: 0,
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -40,7 +39,6 @@ data class MovieResult(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(backdrop_path)
-        parcel.writeList(genre_ids)
         parcel.writeInt(id)
         parcel.writeString(original_language)
         parcel.writeString(original_title)

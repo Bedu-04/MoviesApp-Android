@@ -15,9 +15,10 @@ import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.data.models.Cast
 import org.bedu.movies_app_android.data.models.Crew
 import org.bedu.movies_app_android.data.models.MovieResult
+import org.bedu.movies_app_android.domain.model.Movie
 
 
-class RecyclerMovieDetailAdapter(var movieSelected : List<MovieResult>, var actors : List<Cast>, var director: Crew) : RecyclerView.Adapter<RecyclerMovieDetailAdapter.ViewHolder>(){
+class RecyclerMovieDetailAdapter(var movieSelected : List<Movie>, var actors : List<Cast>, var director: Crew) : RecyclerView.Adapter<RecyclerMovieDetailAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
@@ -58,7 +59,7 @@ class RecyclerMovieDetailAdapter(var movieSelected : List<MovieResult>, var acto
 
 
 
-        fun bind(movie: MovieResult, director: Crew) {
+        fun bind(movie: Movie, director: Crew) {
             titleDetail.text = movie.title
            /* actorsDetail.text = movie.a.joinToString(", ") { it ->
                 it.replaceFirstChar{it -> it.uppercase()}

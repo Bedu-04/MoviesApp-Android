@@ -1,6 +1,7 @@
 package org.bedu.movies_app_android.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,24 +10,39 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.bedu.movies_app_android.R
-
-import org.bedu.movies_app_android.ui.adapters.RecyclerFavoritesAdapter
-import org.bedu.movies_app_android.data.models.Movie
 import org.bedu.movies_app_android.data.models.MovieResult
+import org.bedu.movies_app_android.ui.adapters.RecyclerFavoritesAdapter
+import org.bedu.movies_app_android.domain.model.Movie
+import org.bedu.movies_app_android.domain.useCases.MoviesFavoritesUseCase
 import org.bedu.movies_app_android.store.StoreSingleton
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-class FragmentFavorites : Fragment() {
+import org.bedu.movies_app_android.ui.presenters.FragmentFavoritesContract
+import org.bedu.movies_app_android.ui.presenters.FragmentFavoritesPresenter
+import javax.inject.Inject
+import javax.inject.Named
+@AndroidEntryPoint
+class FragmentFavorites : Fragment(), FragmentFavoritesContract.View {
     private lateinit var recycler: RecyclerView
-    private var store = StoreSingleton.getInstance()
+    private lateinit var presenter: FragmentFavoritesContract.Presenter
+    private lateinit var adapter : RecyclerFavoritesAdapter
+
+
+    @Inject
+    @Named("STORE")
+    lateinit var store: StoreSingleton
+
+    @Inject
+    lateinit var moviesFavoritesUseCase: MoviesFavoritesUseCase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-/*        arguments?.let {
-            var param1 = it.getString(ARG_PARAM1)
-            var param2 = it.getString(ARG_PARAM2)
-        }*/
+        presenter = FragmentFavoritesPresenter(this, moviesFavoritesUseCase)
     }
 
     override fun onCreateView(
@@ -35,9 +51,12 @@ class FragmentFavorites : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
+
         val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
         recycler = view.findViewById(R.id.recyclerFavorites)
+
+
 
         val favoritesMovies = store.getFavorites()
 
@@ -45,50 +64,55 @@ class FragmentFavorites : Fragment() {
 
         if(favoritesMovies.size > 0){textFavorites.text = getString(R.string.your_favorites_movies)} else {textFavorites.text = getString(R.string.dont_have_your_favorites_movies)}
 
-        recycler.adapter = RecyclerFavoritesAdapter(favoritesMovies, goToDetailFragment,toggleMovie)
+        adapter = RecyclerFavoritesAdapter(favoritesMovies as MutableList<Movie>, goToDetailFragment, toggleFavorites())
 
+        recycler.adapter = adapter
         recycler.layoutManager = GridLayoutManager(activity, 3)
+
+        runBlocking {
+            presenter.getAll()
+        }
 
         return view
     }
 
 
-    private val goToDetailFragment:(MovieResult) -> Unit = { movie: MovieResult ->
+    private val goToDetailFragment:(org.bedu.movies_app_android.domain.model.Movie) -> Unit = { movie ->
         val nextFragment = FragmentDetail()
         val args = Bundle()
-        val myArray = arrayOf(movie)
-        args.putParcelableArray("myFavoriteList", myArray)
+        val myFavoriteList = arrayOf<Movie>(movie)
+
+        args.putParcelableArray("myFavoriteList", myFavoriteList)
         nextFragment.arguments = args
         parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
     }
 
 
-    private val toggleMovie:(MovieResult) -> Unit = { movie: MovieResult ->
-        val hasMovie = store.getFavorites().find { it -> (it.id == movie.id && it.isFavorite) }
-        if (hasMovie !== null) {
-            store.deleteFavoriteMovie(movie.id)
-        }else {
-            store.addFavoriteMovie(movie.id)
-        }
-    }
+    private fun toggleFavorites() = fun (movie: Movie, isInsertOperation: Boolean) {
+        Log.e("PORQUE ME AGREGO?", isInsertOperation.toString())
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentFavorites.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentFavorites().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        CoroutineScope(Dispatchers.Main).launch {
+            runBlocking{
+                if (isInsertOperation) {
+                    presenter.insertNewMovie(movie)
+
+                }else {
+                    presenter.deleteMovieById(movie.id)
                 }
             }
+
+
+        }
+
     }
+
+    override fun showData(movies: List<org.bedu.movies_app_android.domain.model.Movie>) {
+        Log.d("PELICULAS DE DB", movies.toString())
+
+        adapter.movies = movies as MutableList<org.bedu.movies_app_android.domain.model.Movie>
+    }
+
+
+
+
 }

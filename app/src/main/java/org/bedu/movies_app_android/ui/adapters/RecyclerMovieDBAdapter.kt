@@ -13,14 +13,18 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.bedu.movies_app_android.data.models.MovieResult
+import org.bedu.movies_app_android.domain.model.Movie
 
 
 class RecyclerMovieDBAdapter(
-
-    var movies : List<MovieResult>?,
-    private val goToDetailFragment: (MovieResult) -> Unit,
-    private val toggleFavorites: (MovieResult) -> Unit) : RecyclerView.Adapter<RecyclerMovieDBAdapter.ViewHolder>(){
+    var movies : List<Movie>?,
+    private val goToDetailFragment: (Movie) -> Unit,
+    private val toggleFavorites: (Movie, Boolean) -> Unit,
+) : RecyclerView.Adapter<RecyclerMovieDBAdapter.ViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,21 +33,20 @@ class RecyclerMovieDBAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("MOVIES", movies.toString())
         val movie = movies?.get(position)
         if (movie != null) {
             holder.bind(movie)
-        }
 
-        holder.favoriteCheck.setOnCheckedChangeListener { _, _ ->
-            if (movie != null) {
-                toggleFavorites(movie)
+            holder.favoriteCheck.setOnClickListener {
+                Log.d("TAG", "ME EJECUTO en el click")
+                val isInsertOperation = holder.favoriteCheck.isChecked
+                toggleFavorites(movie, isInsertOperation)
             }
-        }
 
-        holder.itemView.setOnClickListener{
-            if (movie != null) {
-                goToDetailFragment(movie)
+            holder.itemView.setOnClickListener{
+                if (movie != null) {
+                    goToDetailFragment(movie)
+                }
             }
         }
 
@@ -61,7 +64,8 @@ class RecyclerMovieDBAdapter(
         val posterMovie = view.findViewById<ImageView>(R.id.img)
         val favoriteCheck: CheckBox = view.findViewById(R.id.cbHeart)
 
-        fun bind(movie: MovieResult) {
+        fun bind(movie: Movie) {
+            Log.d("BIND RECYCLER", movie.isFavorite.toString() + movie.original_title)
             titleVT.text = movie.original_title
             favoriteCheck.isChecked = movie.isFavorite
             ratingBarPopularity.rating = movie.vote_average.toFloat()

@@ -9,12 +9,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.databinding.ActivityMainBinding
+import org.bedu.movies_app_android.store.Store
+import org.bedu.movies_app_android.store.StoreSingleton
 import org.bedu.movies_app_android.ui.fragments.FragmentCinemaListings
 import org.bedu.movies_app_android.ui.fragments.FragmentFavorites
 import org.bedu.movies_app_android.ui.fragments.OnSearchListener
+import javax.inject.Inject
+import javax.inject.Named
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(),OnSearchListener ,NavigationView.OnNavigationItemSelectedListener {
     private val binding by lazy {ActivityMainBinding.inflate(layoutInflater) }
 
@@ -48,7 +54,7 @@ class MainActivity : AppCompatActivity(),OnSearchListener ,NavigationView.OnNavi
         })
 
         binding.searchView.setOnCloseListener {
-            Log.d("s", "d")
+            Log.d("Searchiview", "CLOSE")
             onSearch("", true)
             false
         }

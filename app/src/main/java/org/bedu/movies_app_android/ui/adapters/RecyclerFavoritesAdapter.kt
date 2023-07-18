@@ -1,6 +1,7 @@
 package org.bedu.movies_app_android.ui.adapters
 
 
+import android.util.Log
 import org.bedu.movies_app_android.R
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +12,14 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import org.bedu.movies_app_android.data.models.Movie
 import org.bedu.movies_app_android.data.models.MovieResult
+import org.bedu.movies_app_android.domain.model.Movie
 
 
 class RecyclerFavoritesAdapter(
-    private val movies: MutableList<MovieResult>,
-    private val goToDetailFragment: (MovieResult) -> Unit,
-    private val toggleFavorites: (MovieResult) -> Unit
+    var movies: MutableList<Movie>,
+    private val goToDetailFragment: (Movie) -> Unit,
+    private val toggleFavorites: (Movie, Boolean) -> Unit,
 ) : RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,11 +31,13 @@ class RecyclerFavoritesAdapter(
         val movie = movies[position]
         holder.bind(movie)
 
-        holder.favorites_btn.isChecked = true
 
-        holder.favorites_btn.setOnCheckedChangeListener { _, _ ->
-            toggleFavorites(movie)
+        holder.favoriteCheck.setOnClickListener {
+            Log.d("TAG", "ME EJECUTO en el click")
+            val isInsertOperation = holder.favoriteCheck.isChecked
+            toggleFavorites(movie, isInsertOperation)
         }
+
         holder.itemView.setOnClickListener{goToDetailFragment(movie)}
     }
 
@@ -44,15 +47,16 @@ class RecyclerFavoritesAdapter(
     }
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val favorites_btn = view.findViewById<CheckBox>(R.id.cbHeart)
+        val favoriteCheck = view.findViewById<CheckBox>(R.id.cbHeart)
         private val rating_bar = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         private val image_background = view.findViewById<ImageView>(R.id.img)
         private val title = view.findViewById<TextView>(R.id.title_catalog)
 
 
-        fun bind(movie: MovieResult) {
+        fun bind(movie: Movie) {
+            Log.d("MOVIE CHECK", movie.isFavorite.toString())
             title.text = movie.title
-            favorites_btn.isChecked = movie.isFavorite
+            favoriteCheck.isChecked = movie.isFavorite
             rating_bar.rating = movie.vote_average.toFloat()
             /*image_background.setImageResource(movie.image)*/
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(image_background);

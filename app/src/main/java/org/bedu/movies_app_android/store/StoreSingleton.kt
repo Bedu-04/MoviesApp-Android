@@ -1,25 +1,36 @@
 package org.bedu.movies_app_android.store
 
 import android.util.Log
-import androidx.lifecycle.Lifecycling
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.runBlocking
-import org.bedu.movies_app_android.R
+import org.bedu.movies_app_android.data.database.entities.toDatabase
 import org.bedu.movies_app_android.data.network.api.MovieDbApi
-import org.bedu.movies_app_android.data.models.Category
-import org.bedu.movies_app_android.data.models.Language
-import org.bedu.movies_app_android.data.models.Movie
-import org.bedu.movies_app_android.data.models.MovieDB
 import org.bedu.movies_app_android.data.models.MovieDBResult
 import org.bedu.movies_app_android.data.models.MovieResult
+import org.bedu.movies_app_android.domain.model.Movie
+import org.bedu.movies_app_android.domain.model.toDomain
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Named
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object Store {
+    @Singleton
+    @Provides
+    @Named("STORE")
+    fun store() = StoreSingleton.getInstance()
+
+}
 
 class StoreSingleton private constructor() {
-    var moviesDB: MutableList<MovieResult> = mutableListOf<MovieResult>()
-    var searchMoviesDB: MutableList<MovieResult> = mutableListOf<MovieResult>()
+    var moviesDB: MutableList<Movie> = mutableListOf<Movie>()
+    var searchMoviesDB: MutableList<Movie> = mutableListOf<Movie>()
 
     companion object {
         @Volatile
@@ -32,12 +43,12 @@ class StoreSingleton private constructor() {
         }
     }
 
-
-
-    fun getFavorites(): MutableList<MovieResult>  {
-        return moviesDB.filter { m ->
+    fun getFavorites(): List<Movie> {
+        val movies = moviesDB.filter { m ->
             m.isFavorite
-        } as MutableList<MovieResult>
+        }
+
+        return movies
     }
 
     fun addFavoriteMovie(movieId: Int) {
@@ -48,7 +59,7 @@ class StoreSingleton private constructor() {
             }
 
             m
-        } as MutableList<MovieResult>
+        } as MutableList<Movie>
 
     }
 
@@ -93,13 +104,5 @@ class StoreSingleton private constructor() {
         return moviesAux as MutableList<MovieResult>
     }
 
-
-    private fun loadStore(): MutableList<MovieResult> {
-        if (moviesDB !== null && moviesDB.size === 0) {
-            return getDataFromApi()
-        }
-
-      return moviesDB
-    }
 
 }
