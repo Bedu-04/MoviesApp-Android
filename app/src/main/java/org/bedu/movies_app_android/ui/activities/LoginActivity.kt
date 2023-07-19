@@ -3,6 +3,7 @@ package org.bedu.movies_app_android.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -10,6 +11,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.bedu.movies_app_android.R
 import org.bedu.movies_app_android.databinding.ActivityLoginBinding
 
@@ -18,6 +20,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private val GOOGLE_SIGN_IN = 100
+    private val crashlytics = FirebaseCrashlytics.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +79,8 @@ class LoginActivity : AppCompatActivity() {
         try {
             val account = task.getResult(ApiException::class.java)
 
+            Log.d ("cuenta", account.toString())
+
             if(account != null){
 
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
@@ -92,6 +98,8 @@ class LoginActivity : AppCompatActivity() {
             }
         } catch (e: ApiException){
             Toast.makeText(this, "Failed to Authenticate", Toast.LENGTH_SHORT).show()
+            crashlytics.recordException(e)
+            crashlytics.log("Failed to Authenticate")
         }
     }
 }
