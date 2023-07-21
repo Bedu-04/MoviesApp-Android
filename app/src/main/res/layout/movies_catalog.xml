@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="30dp"
@@ -19,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="31dp" />
+        app:layout_constraintGuide_percent="0.88030887" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -138,12 +139,23 @@
         android:id="@+id/cbHeart"
         android:layout_width="59dp"
         android:layout_height="59dp"
+        android:layout_marginEnd="8dp"
         android:button="@drawable/selector_favorites_item"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
         app:layout_constraintVertical_bias="1.0"
         app:useMaterialThemeColors="false" />
+
+    <CheckBox
+        android:id="@+id/cbAddBtn"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginEnd="10dp"
+        android:button="@drawable/baseline_playlist_add_24"
+        android:buttonTint="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

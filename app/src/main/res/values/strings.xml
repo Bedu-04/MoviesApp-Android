@@ -25,5 +25,6 @@
     <!--Favorites text-->
     <string name="your_favorites_movies">This are your favorite movies</string>
     <string name="dont_have_your_favorites_movies">You don\'t have movies right now</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
 
 </resources>
