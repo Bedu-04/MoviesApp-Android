@@ -80,9 +80,9 @@
         android:layout_height="match_parent"
         android:id="@id/navigation_drawer"
         android:layout_gravity="start"
-        android:background="@color/white"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        android:background="@drawable/fondomovie2"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_navigation_menu"
         />

@@ -53,7 +53,7 @@ class RecyclerFavoritesAdapter(
         fun bind(movie: MovieResult) {
             title.text = movie.title
             favorites_btn.isChecked = movie.isFavorite
-            rating_bar.rating = movie.vote_average.toFloat()
+            rating_bar.rating = movie.vote_count.toFloat()
             /*image_background.setImageResource(movie.image)*/
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(image_background);
         }

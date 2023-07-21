@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 item.actionView?.clearFocus()
                 true
             }
+
         }
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)

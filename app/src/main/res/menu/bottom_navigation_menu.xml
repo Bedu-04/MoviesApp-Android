@@ -21,12 +21,12 @@
     <item
         android:id="@+id/subscription"
         android:title="@string/favorite_movies"
-        android:icon="@drawable/baseline_videocam_24"
+        android:icon="@drawable/baseline_stars_24"
         />
 
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
-        android:icon="@drawable/baseline_videocam_24"
+        android:icon="@drawable/baseline_settings_24"
         />
 </menu>

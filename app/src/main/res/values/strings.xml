@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CineBedu</string>
+    <string name="app_name">Movies</string>
     <string name="cinema_listings">Movies Playing</string>
     <string name="favorite_movies">Favorites Movies</string>
     <!-- TODO: Remove or change this placeholder text -->
