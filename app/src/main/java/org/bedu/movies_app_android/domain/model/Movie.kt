@@ -4,6 +4,7 @@ package org.bedu.movies_app_android.domain.model
 import android.os.Parcel
 import android.os.Parcelable
 import org.bedu.movies_app_android.data.database.entities.FavoriteMovieEntity
+import org.bedu.movies_app_android.data.database.entities.NextToSeeMovieEntity
 import org.bedu.movies_app_android.data.models.MovieResult
 
 data class Movie(
@@ -71,4 +72,5 @@ data class Movie(
 
 
 fun FavoriteMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)
+fun NextToSeeMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)
 fun MovieResult.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)

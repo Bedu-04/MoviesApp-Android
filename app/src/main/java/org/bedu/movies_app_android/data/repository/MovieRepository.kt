@@ -3,9 +3,7 @@ package org.bedu.movies_app_android.data.repository
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 import org.bedu.movies_app_android.data.models.Cast
 import org.bedu.movies_app_android.data.models.CreditsResult
 import org.bedu.movies_app_android.data.models.Crew

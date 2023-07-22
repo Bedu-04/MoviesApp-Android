@@ -22,4 +22,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideFavoriteMovieDao(db: MoviesDatabase) = db.getFavoriteMovieDao()
+
+    @Singleton
+    @Provides
+    fun provideNextToSeeDao(db: MoviesDatabase) = db.getNextToSeeDao()
 }
