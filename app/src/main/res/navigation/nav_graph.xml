@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentCinemaListings2">
+    <fragment
+        android:id="@+id/fragmentCinemaListings2"
+        android:name="org.bedu.movies_app_android.ui.fragments.FragmentCinemaListings"
+        android:label="fragment_cinema_listings"
+        tools:layout="@layout/fragment_cinema_listings" >
+        <action
+            android:id="@+id/action_fragmentCinemaListings2_to_fragmentDetail"
+            app:destination="@id/fragmentDetail" />
+        <action
+            android:id="@+id/action_fragmentCinemaListings2_to_fragmentFavorites"
+            app:destination="@id/fragmentFavorites" />
+        <action
+            android:id="@+id/action_fragmentCinemaListings2_to_loginActivity"
+            app:destination="@id/loginActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDetail"
+        android:name="org.bedu.movies_app_android.ui.fragments.FragmentDetail"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_fragmentDetail_to_fragmentFavorites"
+            app:destination="@id/fragmentFavorites" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentFavorites"
+        android:name="org.bedu.movies_app_android.ui.fragments.FragmentFavorites"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="org.bedu.movies_app_android.ui.activities.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/signupActivity"
+        android:name="org.bedu.movies_app_android.ui.activities.SignupActivity"
+        android:label="activity_signup"
+        tools:layout="@layout/activity_signup" />
 </navigation>
