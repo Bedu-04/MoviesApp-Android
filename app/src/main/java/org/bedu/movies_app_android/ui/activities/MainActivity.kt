@@ -2,6 +2,7 @@ package org.bedu.movies_app_android.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -97,4 +98,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // finish()
         }
     }
+
 }

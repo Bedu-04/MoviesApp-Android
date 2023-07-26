@@ -69,7 +69,7 @@ class RecyclerMovieDetailAdapter(var movieSelected : List<MovieResult>, var acto
             // languageDetail.text = movie.original_language
             // durationDetail.text = "${movie.duration.toString()} min"
             directorName.text = director.name
-            ratingDetail.text = movie.vote_average.toString()
+            ratingDetail.text = "${movie.vote_average.toString()} /10"
             resumeDetail.text = movie.overview
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + director.profile_path).into(directorImage);
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(imageDetail);

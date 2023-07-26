@@ -1,11 +1,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:textAlignment="gravity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,27 +20,24 @@
                 android:id="@+id/movie_title"
                 android:layout_width="411dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="TITLE"
                 android:textAlignment="center"
-                android:layout_marginBottom="16dp"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/movie_poster"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="521dp"
                 android:contentDescription="@string/movie_image_description" />
-
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
@@ -50,14 +51,19 @@
 
                 <TextView
                     android:id="@+id/movie_rating"
-                    android:layout_width="wrap_content"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="11dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:numStars="10"
+                    android:rating="0"
+                    android:stepSize="1"
                     android:text="@string/starstext"
-                    android:textSize="28dp"
                     android:textAlignment="textStart"
-                    />
+                    android:textSize="28dp" />
+
             </LinearLayout>
+
 
 
             <TextView
@@ -65,8 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:textSize="18sp"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline11"
@@ -86,28 +92,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:textSize="24sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:text="Director"
                 android:textAlignment="center"
-                android:text="Director" />
+                android:textSize="24sp" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/director_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/img_background"
-                android:src="@drawable/call_of_duty"
                 android:layout_gravity="center"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                android:scaleType="centerCrop" />
+                android:contentDescription="@string/img_background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/call_of_duty"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
             <TextView
                 android:id="@+id/director_name"
@@ -127,11 +132,11 @@
                 android:id="@+id/movie_language"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:textSize="24sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:text="Actores"
                 android:textAlignment="center"
-                android:text="Actores" />
+                android:textSize="24sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerCinemaListing"
@@ -142,11 +147,59 @@
 
         </LinearLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
+                <TextView
+                    android:id="@+id/Recomendadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recomendadas"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+        </ScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Recomendaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    tools:listitem="@layout/movies_catalog"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </HorizontalScrollView>
 
     </LinearLayout>
 
+        </ScrollView>
 
 
-</ScrollView>
+
+
+
+
