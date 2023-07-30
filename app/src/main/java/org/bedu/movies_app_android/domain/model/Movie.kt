@@ -22,6 +22,7 @@ data class Movie(
         val vote_average: Double,
         val vote_count: Int,
         var isFavorite: Boolean,
+        var isNextToSee: Boolean,
 ): Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readByte() != 0.toByte(),
@@ -37,7 +38,9 @@ data class Movie(
                 parcel.readByte() != 0.toByte(),
                 parcel.readDouble() ?: 0.0,
                 parcel.readInt()?: 0,
+                parcel.readByte() != 0.toByte(),
                 parcel.readByte() != 0.toByte()
+
         )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -71,6 +74,6 @@ data class Movie(
 }
 
 
-fun FavoriteMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)
-fun NextToSeeMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)
-fun MovieResult.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)
+fun FavoriteMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, isNextToSee)
+fun NextToSeeMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, isNextToSee)
+fun MovieResult.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, IsNextToSee)

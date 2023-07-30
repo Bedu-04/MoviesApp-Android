@@ -16,6 +16,7 @@ import org.bedu.movies_app_android.store.Store
 import org.bedu.movies_app_android.store.StoreSingleton
 import org.bedu.movies_app_android.ui.fragments.FragmentCinemaListings
 import org.bedu.movies_app_android.ui.fragments.FragmentFavorites
+import org.bedu.movies_app_android.ui.fragments.NextToSeeFragment
 import org.bedu.movies_app_android.ui.fragments.OnSearchListener
 import javax.inject.Inject
 import javax.inject.Named
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity(),OnSearchListener ,NavigationView.OnNavi
     private val cinemaFragment = FragmentCinemaListings()
 
     private val favoritesFragment = FragmentFavorites()
+
+    private val nextFragment = NextToSeeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +79,12 @@ class MainActivity : AppCompatActivity(),OnSearchListener ,NavigationView.OnNavi
                 }
                 R.id.nav_favorite_movies ->{
                     setCurrentFragment(favoritesFragment)
+                    it.actionView?.clearFocus()
+                    true
+                }
+
+                R.id.nav_see_letter_movies ->{
+                    setCurrentFragment(nextFragment)
                     it.actionView?.clearFocus()
                     true
                 }

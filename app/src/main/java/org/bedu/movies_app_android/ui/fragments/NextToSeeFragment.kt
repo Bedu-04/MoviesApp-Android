@@ -16,21 +16,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.bedu.movies_app_android.R
-import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.ui.adapters.RecyclerFavoritesAdapter
 import org.bedu.movies_app_android.domain.model.Movie
 import org.bedu.movies_app_android.domain.useCases.MoviesFavoritesUseCase
 import org.bedu.movies_app_android.domain.useCases.MoviesNextToSeeUseCase
 import org.bedu.movies_app_android.store.StoreSingleton
 import org.bedu.movies_app_android.ui.presenters.ENTITIES
-import org.bedu.movies_app_android.ui.presenters.FragmentFavoritesContract
-import org.bedu.movies_app_android.ui.presenters.FragmentFavoritesPresenter
+import org.bedu.movies_app_android.ui.presenters.FragmentNextToPresenter
+import org.bedu.movies_app_android.ui.presenters.FragmentNextToSeeContract
 import javax.inject.Inject
 import javax.inject.Named
+
+
 @AndroidEntryPoint
-class FragmentFavorites : Fragment(), FragmentFavoritesContract.View {
+class NextToSeeFragment : Fragment(), FragmentNextToSeeContract.View {
     private lateinit var recycler: RecyclerView
-    private lateinit var presenter: FragmentFavoritesContract.Presenter
+    private lateinit var presenter: FragmentNextToSeeContract.Presenter
     private lateinit var adapter : RecyclerFavoritesAdapter
 
 
@@ -39,15 +40,15 @@ class FragmentFavorites : Fragment(), FragmentFavoritesContract.View {
     lateinit var store: StoreSingleton
 
     @Inject
-    lateinit var moviesFavoritesUseCase: MoviesFavoritesUseCase
+    lateinit var moviesNextToSeeUseCase: MoviesNextToSeeUseCase
 
     @Inject
-    lateinit var moviesNextToSeeUseCase: MoviesNextToSeeUseCase
+    lateinit var moviesFavoritesUseCase: MoviesFavoritesUseCase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = FragmentFavoritesPresenter(this, moviesFavoritesUseCase, moviesNextToSeeUseCase)
+        presenter = FragmentNextToPresenter(this, moviesNextToSeeUseCase, moviesFavoritesUseCase)
     }
 
     override fun onCreateView(
@@ -61,15 +62,10 @@ class FragmentFavorites : Fragment(), FragmentFavoritesContract.View {
 
         recycler = view.findViewById(R.id.recyclerFavorites)
 
-
-
-        val favoritesMovies = store.getFavorites()
-
         val textFavorites = view.findViewById<TextView>(R.id.text_wo_favorites)
 
-        if(favoritesMovies.isNotEmpty()){textFavorites.text = getString(R.string.your_favorites_movies)} else {textFavorites.text = getString(R.string.dont_have_your_favorites_movies)}
 
-        adapter = RecyclerFavoritesAdapter(favoritesMovies as MutableList<Movie>, goToDetailFragment, toggleMoviesDB())
+        adapter = RecyclerFavoritesAdapter(emptyList(), goToDetailFragment, toggleMoviesDB())
 
         recycler.adapter = adapter
         recycler.layoutManager = GridLayoutManager(activity, 3)
@@ -94,11 +90,11 @@ class FragmentFavorites : Fragment(), FragmentFavoritesContract.View {
 
 
     private fun toggleMoviesDB() = fun (movie: Movie, isInsertOperation: Boolean, entity: ENTITIES) {
+
         CoroutineScope(Dispatchers.Main).launch {
             runBlocking{
                 if (isInsertOperation) {
                     presenter.insertNewMovie(movie, entity)
-
                 }else {
                     presenter.deleteMovieById(movie.id, entity)
                 }
@@ -110,8 +106,6 @@ class FragmentFavorites : Fragment(), FragmentFavoritesContract.View {
     }
 
     override fun showData(movies: List<org.bedu.movies_app_android.domain.model.Movie>) {
-        Log.d("PELICULAS DE DB", movies.toString())
-
         adapter.movies = movies as MutableList<org.bedu.movies_app_android.domain.model.Movie>
     }
 

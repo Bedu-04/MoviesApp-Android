@@ -37,6 +37,9 @@ data class NextToSeeMovieEntity (
     val vote_count: Int,
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean,
-)
+    @ColumnInfo(name = "isNextToSee")
+    var isNextToSee: Boolean,
 
-fun Movie.toNextDatabase() = NextToSeeMovieEntity( id, original_language, original_title, adult, backdrop_path, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite)
+    )
+
+fun Movie.toNextDatabase() = NextToSeeMovieEntity( id, original_language, original_title, adult, backdrop_path, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, isNextToSee = true)

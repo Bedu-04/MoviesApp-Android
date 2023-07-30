@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">CineBedu</string>
-    <string name="cinema_listings">Movies Playing</string>
-    <string name="favorite_movies">Favorites Movies</string>
+    <string name="cinema_listings">Cartelera</string>
+    <string name="favorite_movies">Favoritas</string>
+    <string name="see_later">Ver mas tarde</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="img_background">img_background</string>
@@ -10,7 +11,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="already_an_user_login">Already an user? Login</string>
     <string name="sign_up">Sign Up</string>
-    <string name="welcome_to">Welcome to</string>
+    <string name="welcome_to">Bienvenido a</string>
     <string name="movies_app">Movies App</string>
     <string name="sign_up_string">Sign Up.</string>
 
@@ -23,8 +24,14 @@
     <string name="starstext">StarsText</string>
 
     <!--Favorites text-->
-    <string name="your_favorites_movies">This are your favorite movies</string>
-    <string name="dont_have_your_favorites_movies">You don\'t have movies right now</string>
+    <string name="your_favorites_movies">Estas son tus peliculas favoritas</string>
+    <string name="dont_have_your_favorites_movies">No cuentas con peliculas favortitas por el momento</string>
+
+    <!--Next To See-->
+    <string name="your_next_movies">Estas son tus peliculas para ver mas tarde</string>
+    <string name="dont_have_your_next_movies">No cuentas con peliculas para ver mas tarde por el momento</string>
+
+
     <string name="sign_in_with_google">Sign in with Google</string>
 
 </resources>

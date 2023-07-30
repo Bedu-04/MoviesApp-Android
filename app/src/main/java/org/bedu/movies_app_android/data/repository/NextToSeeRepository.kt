@@ -28,7 +28,6 @@ class NextToSeeRepository @Inject constructor(
     suspend fun insertOne(movie: Movie) {
         Log.d("LLEGO AQUI al repository", movie.toString())
         val newMovie = movie.toNextDatabase()
-        newMovie.isFavorite = true
 
         return nextToSeeDao.insertOne(newMovie)
     }

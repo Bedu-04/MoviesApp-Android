@@ -18,12 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.domain.model.Movie
+import org.bedu.movies_app_android.ui.presenters.ENTITIES
 
 
 class RecyclerMovieDBAdapter(
     var movies : List<Movie>?,
     private val goToDetailFragment: (Movie) -> Unit,
-    private val toggleFavorites: (Movie, Boolean) -> Unit,
+    private val toggleMoviesDB: (Movie, Boolean, Entity: ENTITIES) -> Unit,
 ) : RecyclerView.Adapter<RecyclerMovieDBAdapter.ViewHolder>(){
 
 
@@ -40,14 +41,17 @@ class RecyclerMovieDBAdapter(
             holder.favoriteCheck.setOnClickListener {
                 Log.d("TAG", "ME EJECUTO en el click")
                 val isInsertOperation = holder.favoriteCheck.isChecked
-                toggleFavorites(movie, isInsertOperation)
+                toggleMoviesDB(movie, isInsertOperation, ENTITIES.FAVORITES)
             }
 
-            holder.itemView.setOnClickListener{
-                if (movie != null) {
-                    goToDetailFragment(movie)
-                }
+            holder.nextToSeeCheck.setOnClickListener{
+                val isInsertOperation = holder.nextToSeeCheck.isChecked
+                toggleMoviesDB(movie, isInsertOperation, ENTITIES.NEXT_TO_SEE)
             }
+
+            holder.itemView.setOnClickListener{  goToDetailFragment(movie) }
+
+
         }
 
 
@@ -63,11 +67,13 @@ class RecyclerMovieDBAdapter(
         private val ratingBarPopularity = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
         val posterMovie = view.findViewById<ImageView>(R.id.img)
         val favoriteCheck: CheckBox = view.findViewById(R.id.cbHeart)
+        val nextToSeeCheck: CheckBox = view.findViewById(R.id.cbAddBtn)
 
         fun bind(movie: Movie) {
             Log.d("BIND RECYCLER", movie.isFavorite.toString() + movie.original_title)
             titleVT.text = movie.original_title
             favoriteCheck.isChecked = movie.isFavorite
+            nextToSeeCheck.isChecked = movie.isNextToSee
             ratingBarPopularity.rating = movie.vote_average.toFloat()
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(posterMovie);
         }

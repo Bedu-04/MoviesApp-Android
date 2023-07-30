@@ -9,7 +9,12 @@ import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.data.repository.DataRepository
 import org.bedu.movies_app_android.domain.model.toDomain
 import org.bedu.movies_app_android.domain.useCases.MoviesFavoritesUseCase
+import org.bedu.movies_app_android.domain.useCases.MoviesNextToSeeUseCase
 
+
+enum class ENTITIES {
+    FAVORITES, NEXT_TO_SEE
+}
 
 interface FragmentContract {
     interface View {
@@ -22,11 +27,11 @@ interface FragmentContract {
 
         fun searchMovieByName(movieName: String)
 
-        suspend fun insertNewMovie(movie: org.bedu.movies_app_android.domain.model.Movie)
+        suspend fun insertNewMovie(movie: org.bedu.movies_app_android.domain.model.Movie, entity: ENTITIES)
 
         suspend fun getMovieById(id: Int): org.bedu.movies_app_android.domain.model.Movie?
 
-        suspend fun deleteMovieById(id: Int): Boolean
+        suspend fun deleteMovieById(id: Int, entity: ENTITIES)
     }
 
 }
@@ -35,17 +40,24 @@ class FragmentCinemaPresenter(
     private val view: FragmentContract.View,
     private val dataRepository: DataRepository<MovieResult>,
     private val moviesFavoritesUseCase: MoviesFavoritesUseCase,
+    private val moviesNextToSeeUseCase: MoviesNextToSeeUseCase,
 ) : FragmentContract.Presenter {
     override fun getMovies() {
         dataRepository.getMovies { movies ->
             CoroutineScope(Dispatchers.Main).launch {
-                val ids = moviesFavoritesUseCase.getIds()
-                Log.d("LLEGO AQUI", ids.toString())
+                val favIds = moviesFavoritesUseCase.getIds()
+                val nextIds = moviesNextToSeeUseCase.getIds()
+
                 val favorites = movies.map { it.toDomain() }
                 val moviesFavorites = favorites.map {
-                    if (ids.contains(it.id)) {
+                    if (favIds.contains(it.id)) {
                         it.isFavorite = true
                     }
+
+                    if (nextIds.contains(it.id)) {
+                        it.isNextToSee = true
+                    }
+
                     it
                 }
                 view.showData(moviesFavorites, false)
@@ -57,10 +69,15 @@ class FragmentCinemaPresenter(
     override fun searchMovieByName(movieName: String) {
         dataRepository.getMoviesByName(movieName) { movies ->
             CoroutineScope(Dispatchers.Main).launch {
-                val ids = moviesFavoritesUseCase.getIds()
+                val favIds = moviesFavoritesUseCase.getIds()
+                val nextIds = moviesNextToSeeUseCase.getIds()
                 val moviesFavorites = movies.map {
-                    if (ids.contains(it.id)) {
+                    if (favIds.contains(it.id)) {
                         it.isFavorite = true
+                    }
+
+                    if (nextIds.contains(it.id)) {
+                        it.IsNextToSee = true
                     }
                     it.toDomain()
                 }
@@ -71,8 +88,18 @@ class FragmentCinemaPresenter(
         }
     }
 
-    override suspend fun insertNewMovie(movie: org.bedu.movies_app_android.domain.model.Movie) {
-        moviesFavoritesUseCase.insertOne(movie);
+    override suspend fun insertNewMovie(movie: org.bedu.movies_app_android.domain.model.Movie, entity: ENTITIES) {
+        Log.d("new movie", entity.toString())
+
+        if (entity == ENTITIES.FAVORITES) {
+            moviesFavoritesUseCase.insertOne(movie);
+        }
+
+        if(entity == ENTITIES.NEXT_TO_SEE) {
+            moviesNextToSeeUseCase.insertOne(movie);
+        }
+
+
     }
 
 
@@ -85,8 +112,15 @@ class FragmentCinemaPresenter(
         }
     }
 
-    override suspend fun deleteMovieById(id: Int): Boolean {
-        return moviesFavoritesUseCase.deleteOneById(id)
+    override suspend fun deleteMovieById(id: Int, entity: ENTITIES) {
+
+        if (entity == ENTITIES.FAVORITES) {
+            moviesNextToSeeUseCase.deleteOneById(id);
+        }
+
+        if (entity == ENTITIES.NEXT_TO_SEE) {
+            moviesNextToSeeUseCase.deleteOneById(id);
+        }
     }
 
 

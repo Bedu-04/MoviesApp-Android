@@ -9,16 +9,16 @@ import org.bedu.movies_app_android.data.database.entities.NextToSeeMovieEntity
 
 @Dao
 interface NextToSeeMovieDao {
-    @Query("SELECT * FROM favorite_movies ORDER BY original_title DESC")
+    @Query("SELECT * FROM next_to_see_movies ORDER BY original_title DESC")
     suspend fun getAll(): List<NextToSeeMovieEntity>
 
-    @Query("SELECT * FROM favorite_movies WHERE id = :movieId")
+    @Query("SELECT * FROM next_to_see_movies WHERE id = :movieId")
     suspend fun getById(movieId: Int): NextToSeeMovieEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOne(favoriteMovie: NextToSeeMovieEntity)
+    suspend fun insertOne(NextMovie: NextToSeeMovieEntity)
 
-    @Query("DELETE FROM favorite_movies WHERE id = :movieId")
+    @Query("DELETE FROM next_to_see_movies WHERE id = :movieId")
     suspend fun deleteById(movieId: Int): Int
 
 }

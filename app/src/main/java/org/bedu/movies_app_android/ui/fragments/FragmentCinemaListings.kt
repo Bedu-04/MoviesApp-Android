@@ -28,6 +28,8 @@ import org.bedu.movies_app_android.data.repository.MovieRepository
 import org.bedu.movies_app_android.databinding.FragmentCinemaListingsBinding
 import org.bedu.movies_app_android.domain.model.Movie
 import org.bedu.movies_app_android.domain.useCases.MoviesFavoritesUseCase
+import org.bedu.movies_app_android.domain.useCases.MoviesNextToSeeUseCase
+import org.bedu.movies_app_android.ui.presenters.ENTITIES
 import org.bedu.movies_app_android.ui.presenters.FragmentCinemaPresenter
 import org.bedu.movies_app_android.ui.presenters.FragmentContract
 import javax.inject.Inject
@@ -46,6 +48,9 @@ class FragmentCinemaListings : Fragment(), OnSearchListener,FragmentContract.Vie
     @Inject
     lateinit var moviesFavoritesUseCase: MoviesFavoritesUseCase
 
+    @Inject
+    lateinit var moviesNextToSeeUseCase: MoviesNextToSeeUseCase
+
     private lateinit var adapter : RecyclerMovieDBAdapter
     private lateinit var presenter: FragmentContract.Presenter
     private var searchListener: OnSearchListener? = null
@@ -55,13 +60,13 @@ class FragmentCinemaListings : Fragment(), OnSearchListener,FragmentContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val movieRepository = MovieRepository()
-        presenter = FragmentCinemaPresenter(this, movieRepository, moviesFavoritesUseCase)
+        presenter = FragmentCinemaPresenter(this, movieRepository, moviesFavoritesUseCase, moviesNextToSeeUseCase)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentCinemaListingsBinding.inflate(inflater, container, false)
 
@@ -71,7 +76,7 @@ class FragmentCinemaListings : Fragment(), OnSearchListener,FragmentContract.Vie
 
         val recycler = binding.recyclerCinemaListing
 
-        adapter = RecyclerMovieDBAdapter(emptyList(), goToDetailFragment(), toggleFavorites())
+        adapter = RecyclerMovieDBAdapter(emptyList(), goToDetailFragment(), toggleMoviesDB())
 
         recycler.adapter = adapter
 
@@ -100,23 +105,16 @@ class FragmentCinemaListings : Fragment(), OnSearchListener,FragmentContract.Vie
 
     }
 
-    private fun toggleFavorites() = fun (movie: Movie, isInsertOperation: Boolean) {
-        Log.e("PORQUE ME AGREGO?", isInsertOperation.toString())
-
-
+    private fun toggleMoviesDB() = fun (movie: Movie, isInsertOperation: Boolean, entity: ENTITIES) {
         CoroutineScope(Dispatchers.Main).launch {
-            // val hasMovie = presenter.getMovieById(movie.id)
             runBlocking{
-
                 if (isInsertOperation) {
-                    presenter.insertNewMovie(movie)
+                    presenter.insertNewMovie(movie, entity)
 
                 }else {
-                    presenter.deleteMovieById(movie.id)
+                    presenter.deleteMovieById(movie.id, entity)
                 }
             }
-
-
         }
 
     }

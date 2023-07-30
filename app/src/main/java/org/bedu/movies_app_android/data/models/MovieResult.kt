@@ -6,7 +6,6 @@ import android.os.Parcelable
 data class MovieResult(
     val adult: Boolean,
     val backdrop_path: String,
-
     val id: Int,
     val original_language: String,
     val original_title: String,
@@ -19,6 +18,7 @@ data class MovieResult(
     val vote_average: Double,
     val vote_count: Int,
     var isFavorite: Boolean,
+    var IsNextToSee: Boolean,
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readByte() != 0.toByte(),
@@ -34,6 +34,7 @@ data class MovieResult(
         parcel.readByte() != 0.toByte(),
         parcel.readDouble() ?: 0.0,
         parcel.readInt()?: 0,
+        parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
     )
 

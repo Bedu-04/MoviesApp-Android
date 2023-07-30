@@ -12,4 +12,10 @@
         android:icon="@drawable/baseline_heart_broken_24"
         />
 
+    <item
+        android:id="@+id/nav_see_letter_movies"
+        android:title="@string/see_later"
+        android:icon="@drawable/baseline_heart_broken_24"
+        />
+
 </menu>
