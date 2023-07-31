@@ -7,9 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 
 import org.bedu.movies_app_android.R
@@ -166,4 +169,28 @@ class FragmentCinemaListings : Fragment(), OnSearchListener,FragmentContract.Vie
 
     }
 
+    @Override
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button btn1 = view.findViewById(R.id.nav_cinema_listings);
+        Button btn2 = view.findViewById(R.id.nav_favorite_movies);
+
+        final NavController navController=Navigation.findNavController(view);
+
+        btn1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Navigation.findNavController(v).navigate(R.id.fragmentCinemaListings2);
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                navController.navigate(R.id.fragmentFavorites);
+            }
+        });
+
+    }
 }
