@@ -10,9 +10,9 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface IMovieDBService {
 
-    /*@Headers({ "Accept: application/json"})*/
+const val TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiM2U1NGIzOGJkMmQ2ODY0Yzk1MzIxYjNiYzVjZDJkMyIsInN1YiI6IjYxNDZhNTgxZTU1OTM3MDA2MTc3OGMxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rZqs0AaAiMSExT-2zQY5yvTeqxVjNY_zg4fXE--9Sz4"
+interface IMovieDBService {
     @Headers("Accept: application/json", "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiM2U1NGIzOGJkMmQ2ODY0Yzk1MzIxYjNiYzVjZDJkMyIsInN1YiI6IjYxNDZhNTgxZTU1OTM3MDA2MTc3OGMxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rZqs0AaAiMSExT-2zQY5yvTeqxVjNY_zg4fXE--9Sz4")
     @GET("movie/now_playing?language=es-MEX&page=1")
     fun getCinemaListings():Call<MovieDBResult>
@@ -30,4 +30,11 @@ interface IMovieDBService {
         @Query("language") language: String = "es-US",
         @Query("page") page: Int = 1,
     ):Call<MovieDBResult>
+
+    @GET("discover/movie")
+    @Headers("Accept: application/json", "Authorization: $TOKEN")
+    fun getMoviesByGenre(
+        @Query("with_genres") genreId: Int
+    ): Call<MovieDBResult>
+
 }

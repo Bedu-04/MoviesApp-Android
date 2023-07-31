@@ -21,6 +21,7 @@ data class Movie(
         val video: Boolean,
         val vote_average: Double,
         val vote_count: Int,
+        val genre_ids: List<Int>,
         var isFavorite: Boolean,
         var isNextToSee: Boolean,
 ): Parcelable {
@@ -38,6 +39,7 @@ data class Movie(
                 parcel.readByte() != 0.toByte(),
                 parcel.readDouble() ?: 0.0,
                 parcel.readInt()?: 0,
+                parcel.createIntArray()?.toList() ?: emptyList(),
                 parcel.readByte() != 0.toByte(),
                 parcel.readByte() != 0.toByte()
 
@@ -55,6 +57,7 @@ data class Movie(
                 parcel.writeString(title)
                 parcel.writeDouble(vote_average)
                 parcel.writeInt(vote_count)
+                parcel.writeIntArray(genre_ids.toIntArray())
 
         }
 
@@ -74,6 +77,6 @@ data class Movie(
 }
 
 
-fun FavoriteMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, isNextToSee)
-fun NextToSeeMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, isNextToSee)
-fun MovieResult.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, IsNextToSee)
+fun FavoriteMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, genre_ids ,isFavorite, isNextToSee)
+fun NextToSeeMovieEntity.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, genre_ids ,isFavorite, isNextToSee)
+fun MovieResult.toDomain() = Movie(adult, backdrop_path, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, genre_ids ,isFavorite, IsNextToSee)

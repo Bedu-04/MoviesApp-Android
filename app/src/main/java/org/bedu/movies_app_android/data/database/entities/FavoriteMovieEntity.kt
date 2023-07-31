@@ -3,10 +3,25 @@ package org.bedu.movies_app_android.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.domain.model.Movie
 
+
+class IntArrayConverter {
+    @TypeConverter
+    fun fromIntArray(intArray: List<Int>): String {
+        return intArray.joinToString(",")
+    }
+
+    @TypeConverter
+    fun toIntArray(intString: String): List<Int> {
+        return intString.split(",").map { it.toInt() }
+    }
+}
 @Entity(tableName = "favorite_movies")
+@TypeConverters(IntArrayConverter::class)
 data class FavoriteMovieEntity (
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
@@ -35,6 +50,8 @@ data class FavoriteMovieEntity (
     val vote_average: Double,
     @ColumnInfo(name = "vote_count")
     val vote_count: Int,
+    @ColumnInfo(name = "genre_ids")
+    val genre_ids: List<Int>,
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean,
     @ColumnInfo(name = "isNextToSee")
@@ -42,4 +59,4 @@ data class FavoriteMovieEntity (
 
 )
 
-fun Movie.toDatabase() = FavoriteMovieEntity( id, original_language, original_title, adult, backdrop_path, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, isFavorite, isNextToSee)
+fun Movie.toDatabase() = FavoriteMovieEntity( id, original_language, original_title, adult, backdrop_path, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count, genre_ids ,isFavorite, isNextToSee)

@@ -9,7 +9,7 @@ import org.bedu.movies_app_android.data.database.dao.FavoriteMovieDao
 import org.bedu.movies_app_android.data.database.entities.FavoriteMovieEntity
 import org.bedu.movies_app_android.data.database.entities.NextToSeeMovieEntity
 
-@Database(entities = [FavoriteMovieEntity::class, NextToSeeMovieEntity::class], version = 3)
+@Database(entities = [FavoriteMovieEntity::class, NextToSeeMovieEntity::class], version = 4)
 abstract class MoviesDatabase: RoomDatabase() {
 
     abstract fun getFavoriteMovieDao() : FavoriteMovieDao

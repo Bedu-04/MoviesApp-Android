@@ -17,6 +17,7 @@ data class MovieResult(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
+    val genre_ids: List<Int>,
     var isFavorite: Boolean,
     var IsNextToSee: Boolean,
 ): Parcelable {
@@ -34,6 +35,7 @@ data class MovieResult(
         parcel.readByte() != 0.toByte(),
         parcel.readDouble() ?: 0.0,
         parcel.readInt()?: 0,
+        parcel.createIntArray()?.toList() ?: emptyList(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
     )
@@ -50,6 +52,8 @@ data class MovieResult(
         parcel.writeString(title)
         parcel.writeDouble(vote_average)
         parcel.writeInt(vote_count)
+        parcel.writeIntArray(genre_ids.toIntArray())
+
 
     }
 

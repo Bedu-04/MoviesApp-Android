@@ -62,6 +62,7 @@ class FragmentDetail : Fragment(), FragmentDetailContract.View {
                 adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director)
 
                 presenter.getMovieCastById(movieSelected[0].id)
+                presenter.getMoviesByGenre(movieSelected[0].genre_ids[0])
             }
         }
         return view
@@ -74,6 +75,10 @@ class FragmentDetail : Fragment(), FragmentDetailContract.View {
         adapter.director = director
         recycler.adapter = adapter
         adapter.notifyDataSetChanged()
+    }
+
+    override fun showSimilarMovies(movies: List<MovieResult>) {
+       Log.d("SIMILAR", movies.toString())
     }
 
 }
