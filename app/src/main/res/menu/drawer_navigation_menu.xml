@@ -17,14 +17,27 @@
         <item
             android:id="@+id/nav_cinema_listings"
             android:title="@string/cinema_listings"
-            android:icon="@drawable/baseline_videocam_24"
+            android:icon="@drawable/claqueta"
             />
 
         <item
             android:id="@+id/nav_favorite_movies"
             android:title="@string/favorite_movies"
-            android:icon="@drawable/baseline_videocam_24"
+            android:icon="@drawable/baseline_stars_24"
             />
+
+        <item
+            android:id="@+id/Playlist"
+            android:title="Movie Playlist"
+            android:icon="@drawable/baseline_playlist_play_24"
+            />
+
+        <item
+            android:id="@+id/signup_confirm"
+            android:title="Logout"
+            android:icon="@drawable/baseline_logout_24"
+            />
+
     </group>
 
 </menu>

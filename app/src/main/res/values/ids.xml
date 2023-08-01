@@ -19,4 +19,6 @@
     <item name="movie_date" type="id" />
     <item name="movie_language" type="id" />
     <item name="navigation_drawer" type="id" />
+    <item name="movie_popularity" type="id" />
+    <item name="original_language" type="id" />
 </resources>

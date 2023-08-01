@@ -23,6 +23,7 @@
     <string name="movie_image_description">movie image</string>
     <string name="starstext">StarsText</string>
 
+
     <!--Favorites text-->
     <string name="your_favorites_movies">Estas son tus peliculas favoritas</string>
     <string name="dont_have_your_favorites_movies">No cuentas con peliculas favortitas por el momento</string>

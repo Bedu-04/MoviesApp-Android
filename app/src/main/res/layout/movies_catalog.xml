@@ -79,7 +79,7 @@
         app:layout_constraintGuide_end="0dp" />
 
 
-    <RatingBar
+    <!--<RatingBar
         android:id="@+id/ratingBar_catalog"
         style="@android:style/Widget.Material.RatingBar.Small"
         android:layout_width="81dp"
@@ -92,7 +92,25 @@
 
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
-        app:layout_constraintTop_toTopOf="@+id/guideline15" />
+        app:layout_constraintTop_toTopOf="@+id/guideline15" />-->
+
+    <RatingBar
+        android:id="@+id/ratingBar_catalog"
+        style="@android:style/Widget.Material.RatingBar.Small"
+        android:layout_width="81dp"
+        android:layout_height="20dp"
+        android:backgroundTint="#5728AC"
+        android:clickable="false"
+        android:max="10"
+        android:numStars="10"
+        android:progressTint="#5728AC"
+        android:stepSize="1.5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline16"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.65" />
 
     <TextView
         android:id="@+id/title_catalog"
