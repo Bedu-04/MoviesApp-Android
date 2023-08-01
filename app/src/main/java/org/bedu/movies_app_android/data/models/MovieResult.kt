@@ -2,6 +2,7 @@ package org.bedu.movies_app_android.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.time.Duration
 
 data class MovieResult(
     val adult: Boolean,
@@ -18,7 +19,8 @@ data class MovieResult(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
-    var isFavorite: Boolean,
+    var isFavorite: Boolean
+
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readByte() != 0.toByte(),
@@ -35,6 +37,9 @@ data class MovieResult(
         parcel.readDouble() ?: 0.0,
         parcel.readInt()?: 0,
         parcel.readByte() != 0.toByte()
+
+
+
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -49,6 +54,7 @@ data class MovieResult(
         parcel.writeString(title)
         parcel.writeDouble(vote_average)
         parcel.writeInt(vote_count)
+
 
     }
 

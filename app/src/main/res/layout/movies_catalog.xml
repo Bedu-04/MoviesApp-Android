@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="30dp"
-    >
+    android:layout_marginBottom="30dp">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -80,14 +79,15 @@
 
     <RatingBar
         android:id="@+id/ratingBar_catalog"
-        android:clickable="false"
         style="@android:style/Widget.Material.RatingBar.Small"
         android:layout_width="81dp"
         android:layout_height="20dp"
+        android:backgroundTint="#5728AC"
+        android:clickable="false"
         android:max="10"
-
-        android:numStars="5"
-        android:stepSize="2"
+        android:numStars="10"
+        android:progressTint="#5728AC"
+        android:stepSize="1.5"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
@@ -100,13 +100,14 @@
         android:layout_width="116dp"
         android:layout_height="20dp"
         android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
         app:layout_constraintVertical_bias="0.0" />
-
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -132,8 +133,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline"
 
         app:layout_constraintStart_toStartOf="@+id/guideline16"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-         />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <CheckBox
         android:id="@+id/cbHeart"
