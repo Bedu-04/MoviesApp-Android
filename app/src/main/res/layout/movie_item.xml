@@ -103,11 +103,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:orientation="horizontal"></LinearLayout>
+            android:orientation="horizontal">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,7 +132,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical" />
             </LinearLayout>
-        </ScrollView>
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -151,7 +150,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:textAlignment="center"
-                android:text="Director"
+                android:text="@string/director_string"
                 android:textColor="@color/black"/>
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -182,14 +181,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/movie_language"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textSize="24sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:textAlignment="center"
-                android:text="ACTORES"
+                android:text="@string/actors_string"
                 android:textColor="@color/black"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -201,8 +199,19 @@
 
         </LinearLayout>
 
-
-
+        <TextView
+            android:id="@+id/similar_movies"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:textSize="24sp"
+            android:text="SIMILARES"
+            android:textAlignment="center"
+            android:textColor="@color/black"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerSimilarMovies"
+            listitem="@layout/movies_catalog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

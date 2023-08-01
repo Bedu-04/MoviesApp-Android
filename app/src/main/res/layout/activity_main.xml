@@ -100,7 +100,7 @@
         android:layout_height="match_parent"
         android:id="@id/navigation_drawer"
         android:layout_gravity="start"
-        android:background="@drawable/fondodetalleapp"
+
         app:itemIconTint="@color/purple_500"
         app:itemTextColor="@color/purple_700"
         app:headerLayout="@layout/nav_header"

@@ -1,21 +1,18 @@
 package org.bedu.movies_app_android.ui.presenters
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.bedu.movies_app_android.data.models.Cast
 import org.bedu.movies_app_android.data.models.Crew
 import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.data.repository.DataRepository
+import org.bedu.movies_app_android.domain.model.Movie
+import org.bedu.movies_app_android.domain.model.toDomain
 
 interface FragmentDetailContract {
 
     interface View {
         fun showData(cast: List<Cast>, director: Crew)
 
-        fun showSimilarMovies(movies: List<MovieResult>)
+        fun showSimilarMovies(movies: List<Movie>)
 
     }
 
@@ -40,7 +37,8 @@ class FragmentDetailPresenter(
 
     override fun getMoviesByGenre(genreId: Int) {
         dataRepository.getMoviesByGenre(genreId) { movies ->
-            view.showSimilarMovies(movies)
+            val moviesDomain = movies.map { it -> it.toDomain() }
+            view.showSimilarMovies(moviesDomain)
         }
 
     }

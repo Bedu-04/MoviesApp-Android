@@ -18,15 +18,30 @@ import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.domain.model.Movie
 
 
-class RecyclerMovieDetailAdapter(var movieSelected : List<Movie>, var actors : List<Cast>, var director: Crew) : RecyclerView.Adapter<RecyclerMovieDetailAdapter.ViewHolder>(){
+class RecyclerMovieDetailAdapter(
+    var movieSelected : List<Movie>,
+    var actors : List<Cast>,
+    var director: Crew,
+    var similarMovies: List<Movie>
+    ) : RecyclerView.Adapter<RecyclerMovieDetailAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerCinemaListing)
+        val actorsRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerCinemaListing)
+        val similarMoviesRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerSimilarMovies)
 
         // recyclerView.layoutManager = LinearLayoutManager(, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = RecyclerCharacterMovieAdapter(actors)
-        recyclerView.layoutManager = GridLayoutManager(view.context, 3)
+
+        /*RECYCLER ACTORS*/
+        actorsRecyclerView.adapter = RecyclerCharacterMovieAdapter(actors)
+        actorsRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
+
+
+
+        /* RECYCLER MOVIES */
+        similarMoviesRecyclerView.adapter = RecyclerSimilarMoviesAdapter(similarMovies)
+        similarMoviesRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+
         return ViewHolder(view)
     }
 
@@ -51,11 +66,11 @@ class RecyclerMovieDetailAdapter(var movieSelected : List<Movie>, var actors : L
         private val directorImage = view.findViewById<ImageView>(R.id.director_image)
         // private val ratingDetail = view.findViewById<RatingBar>(R.id.movie_rating)
         private val ratingDetail = view.findViewById<TextView>(R.id.movie_rating)
-        private val originallanguageDetail = view.findViewById<TextView>(R.id.original_language)
+        private val originalLanguageDetail = view.findViewById<TextView>(R.id.original_language)
         private val popularityDetail = view.findViewById<TextView>(R.id.movie_popularity)
 
 
-        private val languageDetail = view.findViewById<TextView>(R.id.movie_language)
+
         private val dateDetail = view.findViewById<TextView>(R.id.movie_date)
         private val resumeDetail = view.findViewById<TextView>(R.id.movie_resume)
         private val imageDetail = view.findViewById<ImageView>(R.id.movie_poster)
@@ -77,8 +92,8 @@ class RecyclerMovieDetailAdapter(var movieSelected : List<Movie>, var actors : L
             ratingDetail.text = "Rating: ${movie.vote_average.toString()} /10"
             resumeDetail.text = movie.overview
             dateDetail.text = "Estreno: ${movie.release_date}"
-            languageDetail.text = movie.original_language
-            originallanguageDetail.text = "Idioma: ${movie.original_language}"
+            originalLanguageDetail.text = movie.original_language
+            // originalLanguageDetail.text = "Idioma: ${movie.original_language}"
             popularityDetail.text = "Pupularidad:${movie.popularity.toString()}"
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + director.profile_path).into(directorImage);
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(imageDetail);

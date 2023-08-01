@@ -59,7 +59,7 @@ class FragmentDetail : Fragment(), FragmentDetailContract.View {
             if (myArray != null) {
                 movieSelected = myArray.filterIsInstance<Movie>()
                 Log.d("MOVIE SELECTED", movieSelected.toString())
-                adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director)
+                adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director, emptyList())
 
                 presenter.getMovieCastById(movieSelected[0].id)
                 presenter.getMoviesByGenre(movieSelected[0].genre_ids[0])
@@ -77,8 +77,11 @@ class FragmentDetail : Fragment(), FragmentDetailContract.View {
         adapter.notifyDataSetChanged()
     }
 
-    override fun showSimilarMovies(movies: List<MovieResult>) {
-       Log.d("SIMILAR", movies.toString())
+    @SuppressLint("NotifyDataSetChanged")
+    override fun showSimilarMovies(movies: List<Movie>) {
+        Log.d("SIMILAR", movies.toString())
+       adapter.similarMovies = movies
+        adapter.notifyDataSetChanged()
     }
 
 }

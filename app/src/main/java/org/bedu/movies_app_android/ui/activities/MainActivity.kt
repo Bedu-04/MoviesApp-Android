@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(),OnSearchListener ,NavigationView.OnNavi
         val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 
         binding.drawerLayout.addDrawerListener(toggle)
+
         toggle.syncState()
 
         binding.navigationDrawer.setNavigationItemSelectedListener(this)

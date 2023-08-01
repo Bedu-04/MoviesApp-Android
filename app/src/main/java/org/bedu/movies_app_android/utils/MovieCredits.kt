@@ -7,7 +7,7 @@ import org.bedu.movies_app_android.data.models.Crew
 internal fun getMovieCast(originCast: List<Cast>): List<Cast> {
     val castWithImage = originCast.filter { it -> it.profile_path != null }
 
-    return castWithImage
+    return castWithImage.take(9)
 }
 
 
