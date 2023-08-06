@@ -61,18 +61,16 @@ class RecyclerMovieDetailAdapter(
         private val titleDetail = view.findViewById<TextView>(R.id.movie_title)
         private val actorsDetail = view.findViewById<TextView>(R.id.movie_actors)
         private val directorDetail = view.findViewById<TextView>(R.id.movie_director)
-        // private val category = view.findViewById<TextView>(R.id.movie)
         private val directorName = view.findViewById<TextView>(R.id.director_name)
         private val directorImage = view.findViewById<ImageView>(R.id.director_image)
-        // private val ratingDetail = view.findViewById<RatingBar>(R.id.movie_rating)
         private val ratingDetail = view.findViewById<TextView>(R.id.movie_rating)
-        private val originalLanguageDetail = view.findViewById<TextView>(R.id.original_language)
-        private val popularityDetail = view.findViewById<TextView>(R.id.movie_popularity)
 
 
-
-        private val dateDetail = view.findViewById<TextView>(R.id.movie_date)
-        private val resumeDetail = view.findViewById<TextView>(R.id.movie_resume)
+        private val dateMovie = view.findViewById<TextView>(R.id.movie_date)
+        private val languageMovie = view.findViewById<TextView>(R.id.movie_language)
+        private val popularityMovie = view.findViewById<TextView>(R.id.movie_popularity)
+        private val genreMovie = view.findViewById<TextView>(R.id.movie_genre)
+        private val resumeMovie = view.findViewById<TextView>(R.id.movie_resume)
         private val imageDetail = view.findViewById<ImageView>(R.id.movie_poster)
 
 
@@ -88,13 +86,20 @@ class RecyclerMovieDetailAdapter(
             }*/
             // languageDetail.text = movie.original_language
             //durationDetail.text = "${movie.duration.toString()} min"
-            directorName.text = director.name
+            /*directorName.text = director.name
             ratingDetail.text = "Rating: ${movie.vote_average.toString()} /10"
             resumeDetail.text = movie.overview
             dateDetail.text = "Estreno: ${movie.release_date}"
-            originalLanguageDetail.text = movie.original_language
+            originalLanguageDetail.text = movie.original_language*/
             // originalLanguageDetail.text = "Idioma: ${movie.original_language}"
-            popularityDetail.text = "Pupularidad:${movie.popularity.toString()}"
+            // popularityDetail.text = "Pupularidad:${movie.popularity.toString()}"
+            dateMovie.text = movie.release_date;
+            languageMovie.text = movie.original_language.uppercase();
+            popularityMovie.text = movie.popularity.toString();
+            genreMovie.text = movie.genre_ids.joinToString();
+            resumeMovie.text = movie.overview;
+            ratingDetail.text = "${movie.vote_average.toString()} /10"
+
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + director.profile_path).into(directorImage);
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(imageDetail);
 

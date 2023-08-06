@@ -7,4 +7,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="TextViewWithBorder">
+        <item name="android:background">@drawable/border</item>
+        <!-- Otros atributos de estilo que desees aplicar al TextView -->
+    </style>
 </resources>
