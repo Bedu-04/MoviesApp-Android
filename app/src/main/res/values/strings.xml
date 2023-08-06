@@ -35,6 +35,6 @@
 
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="actors_string">ACTORES</string>
-    <string name="director_string">DIRECTOR</string>
+    <string name="director_string">Director</string>
 
 </resources>

@@ -29,7 +29,7 @@
                 android:layout_marginBottom="4dp"
                 android:text="The name movie"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/purple_700"
                 android:textSize="28sp"
                 android:textStyle="bold"
 
@@ -70,7 +70,7 @@
                     android:text="☆"
                     android:textAlignment="textEnd"
                     android:textColor="@color/purple_700"
-                    android:textSize="32dp" />
+                    android:textSize="32sp" />
 
                 <TextView
                     android:id="@+id/movie_rating"
@@ -80,8 +80,9 @@
                     android:padding="8dp"
                     android:text="@string/starstext"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
-                    android:textSize="24dp" />
+                    android:textColor="@color/purple_200"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
 
 
             </LinearLayout>
@@ -294,7 +295,7 @@
                 android:paddingHorizontal="16dp"
 
                 android:lineSpacingExtra="12dp"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:textColor="@color/black"/>
 
@@ -372,9 +373,10 @@
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:textSize="24sp"
-            android:text="SIMILARES"
+            android:text="Similares"
             android:textAlignment="center"
-            android:textColor="@color/black"/>
+            android:textStyle="bold"
+            android:textColor="@color/purple_700"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerSimilarMovies"
             listitem="@layout/movies_catalog"

@@ -64,7 +64,7 @@ class RecyclerMovieDBAdapter(
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         private val titleVT = view.findViewById<TextView>(R.id.title_catalog)
-        private val ratingBarPopularity = view.findViewById<RatingBar>(R.id.ratingBar_catalog)
+        private val ratingBarPopularity = view.findViewById<TextView>(R.id.movie_rating)
         val posterMovie = view.findViewById<ImageView>(R.id.img)
         val favoriteCheck: CheckBox = view.findViewById(R.id.cbHeart)
         val nextToSeeCheck: CheckBox = view.findViewById(R.id.cbAddBtn)
@@ -74,7 +74,7 @@ class RecyclerMovieDBAdapter(
             titleVT.text = movie.original_title
             favoriteCheck.isChecked = movie.isFavorite
             nextToSeeCheck.isChecked = movie.isNextToSee
-            ratingBarPopularity.rating = movie.vote_average.toFloat()
+            ratingBarPopularity.text = movie.vote_average.toFloat().toString()
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(posterMovie);
         }
     }

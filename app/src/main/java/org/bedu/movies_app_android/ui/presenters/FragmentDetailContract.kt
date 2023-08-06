@@ -10,7 +10,7 @@ import org.bedu.movies_app_android.domain.model.toDomain
 interface FragmentDetailContract {
 
     interface View {
-        fun showData(cast: List<Cast>, director: Crew)
+        fun showData(cast: List<Cast>, director: Crew, similar: List<Movie>)
 
         fun showSimilarMovies(movies: List<Movie>)
 
@@ -20,6 +20,8 @@ interface FragmentDetailContract {
         fun getMovieCastById(movieId: Int)
 
         fun getMoviesByGenre(genreId: Int)
+
+        fun getAllInfo(movieId: Int,genreId: Int)
 
 
     }
@@ -31,7 +33,7 @@ class FragmentDetailPresenter(
 ) : FragmentDetailContract.Presenter {
     override fun getMovieCastById(movieId: Int) {
         dataRepository.getCastMovieById(movieId.toString()) { c, d ->
-            view.showData(c, d)
+            view.showData(c, d, emptyList())
         }
     }
 
@@ -41,6 +43,17 @@ class FragmentDetailPresenter(
             view.showSimilarMovies(moviesDomain)
         }
 
+    }
+
+    override fun getAllInfo(movieId: Int, genreId: Int) {
+        dataRepository.getCastMovieById(movieId.toString()) { c, d ->
+            dataRepository.getMoviesByGenre(genreId) { movies ->
+                val moviesDomain = movies.map { it -> it.toDomain() }
+                // view.showSimilarMovies(moviesDomain)
+                view.showData(c, d, moviesDomain)
+            }
+
+        }
     }
 
 

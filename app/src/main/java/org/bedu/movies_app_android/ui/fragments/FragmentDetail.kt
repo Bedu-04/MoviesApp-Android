@@ -59,28 +59,42 @@ class FragmentDetail : Fragment(), FragmentDetailContract.View {
             if (myArray != null) {
                 movieSelected = myArray.filterIsInstance<Movie>()
                 Log.d("MOVIE SELECTED", movieSelected.toString())
-                adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director, emptyList())
+                adapter = RecyclerMovieDetailAdapter(movieSelected, cast, director, emptyList(), goToDetailFragment())
 
-                presenter.getMovieCastById(movieSelected[0].id)
-                presenter.getMoviesByGenre(movieSelected[0].genre_ids[0])
+                /*presenter.getMovieCastById(movieSelected[0].id)
+                presenter.getMoviesByGenre(movieSelected[0].genre_ids[0])*/
+
+                presenter.getAllInfo(movieSelected[0].id, movieSelected[0].genre_ids[0])
             }
         }
         return view
     }
 
+    private fun goToDetailFragment() = fun (movie: Movie) {
+        val nextFragment = FragmentDetail()
+        val args = Bundle()
+        val myFavoriteList = arrayOf<Movie>(movie)
+
+        args.putParcelableArray("myFavoriteList", myFavoriteList)
+        nextFragment.arguments = args
+        parentFragmentManager.beginTransaction().replace(R.id.containerView, nextFragment).addToBackStack(null).commit()
+
+    }
+
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun showData(cast: List<Cast>, director: Crew) {
+    override fun showData(cast: List<Cast>, director: Crew, similar: List<Movie>) {
         adapter.actors = cast
         adapter.director = director
         recycler.adapter = adapter
+        adapter.similarMovies = similar
         adapter.notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun showSimilarMovies(movies: List<Movie>) {
         Log.d("SIMILAR", movies.toString())
-       adapter.similarMovies = movies
+        adapter.similarMovies = movies
         adapter.notifyDataSetChanged()
     }
 

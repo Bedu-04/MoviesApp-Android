@@ -12,7 +12,8 @@ import org.bedu.movies_app_android.data.models.Cast
 import org.bedu.movies_app_android.domain.model.Movie
 
 class RecyclerSimilarMoviesAdapter(
-    var movies : List<Movie>?
+    var movies : List<Movie>?,
+    private val goToDetailFragment: (Movie) -> Unit,
 ): RecyclerView.Adapter<RecyclerSimilarMoviesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,6 +28,8 @@ class RecyclerSimilarMoviesAdapter(
 
         if (movie != null) {
             holder.bind(movie)
+
+            holder.itemView.setOnClickListener{goToDetailFragment(movie)}
         }
     }
 

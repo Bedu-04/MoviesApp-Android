@@ -76,6 +76,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
+                    app:itemTextColor="@color/purple_700"
+                    app:itemRippleColor="@color/purple_700"
                     app:labelVisibilityMode="labeled"
                     android:layout_gravity="center"
                     app:menu="@menu/navigation_menu" />

@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="238dp" />
+        app:layout_constraintGuide_begin="265dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -62,21 +62,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="77dp" />
+        app:layout_constraintGuide_begin="218dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.79" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="0dp" />
+        app:layout_constraintGuide_begin="238dp" />
 
 
     <!--<RatingBar
@@ -94,23 +87,46 @@
         app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />-->
 
+
     <RatingBar
         android:id="@+id/ratingBar_catalog"
         style="@android:style/Widget.Material.RatingBar.Small"
-        android:layout_width="81dp"
-        android:layout_height="20dp"
-        android:backgroundTint="#5728AC"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:backgroundTint="@color/purple_200"
+
         android:clickable="false"
-        android:max="10"
-        android:numStars="10"
-        android:progressTint="#5728AC"
+        android:max="1"
+
+        android:numStars="1"
+
+        android:progressTint="@color/purple_200"
+        android:rating="1"
+
         android:stepSize="1.5"
-        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.363" />
+
+    <TextView
+        android:id="@+id/movie_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:text="3.5"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:textColor="@color/purple_500"
+
+
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.395"
+        app:layout_constraintStart_toStartOf="@+id/guideline16"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.363" />
 
     <TextView
         android:id="@+id/title_catalog"
@@ -118,12 +134,13 @@
         android:layout_height="20dp"
         android:text="jdsjhdjhfdjkhdfjhkjhdfksjkhds"
         android:textAlignment="center"
+        android:textColor="@color/purple_500"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
@@ -142,7 +159,7 @@
     <ImageView
         android:id="@+id/img"
         android:layout_width="115dp"
-        android:layout_height="184dp"
+        android:layout_height="210dp"
         android:contentDescription="@string/img_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -154,29 +171,31 @@
 
     <CheckBox
         android:id="@+id/cbHeart"
-        android:layout_width="31dp"
-        android:layout_height="25dp"
-
-        android:layout_marginEnd="16dp"
+        android:layout_width="29dp"
+        android:layout_height="19dp"
 
         android:button="@drawable/selector_favorites_item"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.571"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbAddBtn"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/guideline16"
+        app:layout_constraintTop_toTopOf="@+id/guideline15"
+        app:layout_constraintVertical_bias="0.0"
         app:useMaterialThemeColors="false" />
 
     <CheckBox
         android:id="@+id/cbAddBtn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="23dp"
+        android:layout_height="20dp"
 
 
+        android:layout_marginEnd="28dp"
         android:button="@drawable/baseline_playlist_add_24"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/cbHeart"
-        app:layout_constraintStart_toStartOf="@+id/guideline16"
-        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline15"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

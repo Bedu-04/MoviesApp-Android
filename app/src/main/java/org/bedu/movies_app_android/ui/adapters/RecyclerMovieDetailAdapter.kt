@@ -22,7 +22,8 @@ class RecyclerMovieDetailAdapter(
     var movieSelected : List<Movie>,
     var actors : List<Cast>,
     var director: Crew,
-    var similarMovies: List<Movie>
+    var similarMovies: List<Movie>,
+    private val goToDetailFragment: (Movie) -> Unit,
     ) : RecyclerView.Adapter<RecyclerMovieDetailAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,7 +40,7 @@ class RecyclerMovieDetailAdapter(
 
 
         /* RECYCLER MOVIES */
-        similarMoviesRecyclerView.adapter = RecyclerSimilarMoviesAdapter(similarMovies)
+        similarMoviesRecyclerView.adapter = RecyclerSimilarMoviesAdapter(similarMovies, goToDetailFragment)
         similarMoviesRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
 
         return ViewHolder(view)
@@ -101,7 +102,7 @@ class RecyclerMovieDetailAdapter(
             ratingDetail.text = "${movie.vote_average.toString()} /10"
 
             Picasso.get().load("https://image.tmdb.org/t/p/w300" + director.profile_path).into(directorImage);
-            Picasso.get().load("https://image.tmdb.org/t/p/w300" + movie.poster_path).into(imageDetail);
+            Picasso.get().load("https://image.tmdb.org/t/p/w500" + movie.poster_path).into(imageDetail);
 
         }
     }
