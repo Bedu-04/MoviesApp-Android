@@ -16,6 +16,7 @@ import org.bedu.movies_app_android.data.models.Cast
 import org.bedu.movies_app_android.data.models.Crew
 import org.bedu.movies_app_android.data.models.MovieResult
 import org.bedu.movies_app_android.domain.model.Movie
+import kotlin.math.ceil
 
 
 class RecyclerMovieDetailAdapter(
@@ -79,24 +80,9 @@ class RecyclerMovieDetailAdapter(
 
         fun bind(movie: Movie, director: Crew) {
             titleDetail.text = movie.title
-           /* actorsDetail.text = movie.a.joinToString(", ") { it ->
-                it.replaceFirstChar{it -> it.uppercase()}
-            }
-            directorDetail.text = movie.directors.joinToString(limit = 1, truncated = "....") {
-                it.replaceFirstChar{it -> it.uppercase()}
-            }*/
-            // languageDetail.text = movie.original_language
-            //durationDetail.text = "${movie.duration.toString()} min"
-            /*directorName.text = director.name
-            ratingDetail.text = "Rating: ${movie.vote_average.toString()} /10"
-            resumeDetail.text = movie.overview
-            dateDetail.text = "Estreno: ${movie.release_date}"
-            originalLanguageDetail.text = movie.original_language*/
-            // originalLanguageDetail.text = "Idioma: ${movie.original_language}"
-            // popularityDetail.text = "Pupularidad:${movie.popularity.toString()}"
             dateMovie.text = movie.release_date;
             languageMovie.text = movie.original_language.uppercase();
-            popularityMovie.text = movie.popularity.toString();
+            popularityMovie.text = "\uD83D\uDC4D"+ " " + ceil(movie.popularity).toString();
             genreMovie.text = movie.genre_ids.joinToString();
             resumeMovie.text = movie.overview;
             ratingDetail.text = "${movie.vote_average.toString()} /10"

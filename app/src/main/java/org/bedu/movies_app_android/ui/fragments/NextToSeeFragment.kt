@@ -55,16 +55,13 @@ class NextToSeeFragment : Fragment(), FragmentNextToSeeContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
-
         val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
         recycler = view.findViewById(R.id.recyclerFavorites)
 
         val textFavorites = view.findViewById<TextView>(R.id.text_wo_favorites)
 
-
+        textFavorites.text = getString(R.string.string_next_to_see);
         adapter = RecyclerFavoritesAdapter(emptyList(), goToDetailFragment, toggleMoviesDB())
 
         recycler.adapter = adapter

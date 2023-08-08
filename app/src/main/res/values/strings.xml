@@ -25,16 +25,17 @@
 
 
     <!--Favorites text-->
-    <string name="your_favorites_movies">Estas son tus peliculas favoritas</string>
-    <string name="dont_have_your_favorites_movies">No cuentas con peliculas favortitas por el momento</string>
+    <string name="your_favorites_movies">Estas son tus películas favoritas</string>
+    <string name="dont_have_your_favorites_movies">No cuentas con películas favortitas por el momento</string>
 
     <!--Next To See-->
-    <string name="your_next_movies">Estas son tus peliculas para ver mas tarde</string>
-    <string name="dont_have_your_next_movies">No cuentas con peliculas para ver mas tarde por el momento</string>
+    <string name="your_next_movies">Estas son tus películas para ver mas tarde</string>
+    <string name="dont_have_your_next_movies">No cuentas con películas para ver mas tarde por el momento</string>
 
 
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="actors_string">ACTORES</string>
     <string name="director_string">Director</string>
+    <string name="string_next_to_see">Estas son tus películas para ver más tarde</string>
 
 </resources>

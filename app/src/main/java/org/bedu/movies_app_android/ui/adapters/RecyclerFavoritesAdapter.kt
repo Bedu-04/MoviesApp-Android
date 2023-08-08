@@ -32,9 +32,7 @@ class RecyclerFavoritesAdapter(
         val movie = movies[position]
         holder.bind(movie)
 
-
         holder.favoriteCheck.setOnClickListener {
-            Log.d("TAG", "ME EJECUTO en el click")
             val isInsertOperation = holder.favoriteCheck.isChecked
             toggleMoviesDB(movie, isInsertOperation, ENTITIES.FAVORITES)
         }
@@ -61,7 +59,6 @@ class RecyclerFavoritesAdapter(
 
 
         fun bind(movie: Movie) {
-            Log.d("MOVIE CHECK", movie.isFavorite.toString())
             title.text = movie.title
             favoriteCheck.isChecked = movie.isFavorite
             nextToSeeCheck.isChecked = movie.isNextToSee
