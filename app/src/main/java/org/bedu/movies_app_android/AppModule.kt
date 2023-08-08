@@ -13,11 +13,6 @@ import org.bedu.movies_app_android.data.repository.MovieRepository
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    // Define las dependencias globales que necesites
-    // Puedes proporcionar dependencias aquí utilizando @Provides
-
-    // Ejemplo:
     @Provides
     fun provideDataRepository(): DataRepository<MovieResult> {
         return MovieRepository()
